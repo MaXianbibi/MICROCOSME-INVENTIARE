@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://duwnkmt5vq6ww"]
+
+[ext_resource type="Script" uid="uid://bjk6rtfr0id03" path="res://Player/interaction_ray.gd" id="1_a4boh"]
+
+[node name="InteractionRay" type="Node"]
+script = ExtResource("1_a4boh")
