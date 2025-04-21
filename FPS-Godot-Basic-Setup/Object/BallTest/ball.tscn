@@ -1,0 +1,31 @@
+[gd_scene load_steps=8 format=3 uid="uid://clarc3kmoicgs"]
+
+[ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://materials/grid.tres" id="1_io1lo"]
+[ext_resource type="PackedScene" uid="uid://bk877ag5jqb1e" path="res://Interactable/Pickable.tscn" id="2_58khf"]
+[ext_resource type="PackedScene" uid="uid://bm6xcqyhwsuy0" path="res://Inventaire/ObjectData.tscn" id="3_8v8bq"]
+[ext_resource type="Resource" uid="uid://bw1dru5hqyo1h" path="res://Object/BallTest/BallTestRes.tres" id="4_io1lo"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vmibe"]
+rough = true
+bounce = 0.54
+
+[sub_resource type="SphereMesh" id="SphereMesh_bvijt"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3mabw"]
+radius = 0.506237
+
+[node name="Ball" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_vmibe")
+continuous_cd = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_io1lo")
+mesh = SubResource("SphereMesh_bvijt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_3mabw")
+
+[node name="Pickable" parent="." instance=ExtResource("2_58khf")]
+
+[node name="ObjectData" parent="." instance=ExtResource("3_8v8bq")]
+item_data = ExtResource("4_io1lo")

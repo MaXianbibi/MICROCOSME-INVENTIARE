@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bcr6ws5yna40e"]
+[gd_scene load_steps=6 format=3 uid="uid://bcr6ws5yna40e"]
 
 [ext_resource type="Script" uid="uid://bnppta0npsdba" path="res://HUD/hud.gd" id="1_f31rt"]
 [ext_resource type="Script" uid="uid://ded83f1vnxy7p" path="res://HUD/interaction_label.gd" id="2_b7ubu"]
+[ext_resource type="Script" uid="uid://23umvkjkxtje" path="res://HUD/playerItemUI.tres.gd" id="3_ja1d4"]
+[ext_resource type="Script" uid="uid://c2bwq15wsw8pt" path="res://HUD/sub_item_menu.gd" id="4_amwvk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_augcw"]
 bg_color = Color(0.168627, 0.596078, 1, 1)
@@ -17,7 +19,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
 script = ExtResource("1_f31rt")
 metadata/_edit_use_anchors_ = true
 
@@ -49,6 +51,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("2_b7ubu")
 
 [node name="Key" type="Label" parent="InteractionLabel"]
@@ -65,3 +68,31 @@ text = "To Pick"
 layout_mode = 2
 size_flags_horizontal = 4
 text = "The Ball"
+
+[node name="PlayerItemHUD" type="HBoxContainer" parent="." groups=["PlayerUI"]]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -101.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("3_ja1d4")
+
+[node name="SubItemMenu" type="GridContainer" parent="." groups=["SubMenuHud"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.216667
+anchor_top = 0.348148
+anchor_right = 0.954167
+anchor_bottom = 0.659259
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 10
+columns = 10
+script = ExtResource("4_amwvk")
+metadata/_edit_use_anchors_ = true

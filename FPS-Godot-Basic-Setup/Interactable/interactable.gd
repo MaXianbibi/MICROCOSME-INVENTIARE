@@ -10,7 +10,7 @@ var interaction_name = "Do nothing"
 var _name := "nothing"
 var hud : HUD = HudManager.hud
 
-func interact() -> void:
+func interact(body : Entity = null) -> void:
 	push_error("Not supposed to be interact with")
 
 # Called when the node enters the scene tree for the first time.

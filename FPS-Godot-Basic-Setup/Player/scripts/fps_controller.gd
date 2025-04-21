@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends Entity
 class_name Player
 
 @export var SPEED : float = 5.0
@@ -8,20 +8,31 @@ class_name Player
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
 @export var CAMERA_CONTROLLER : Camera3D
 
+@export var hold_offset: Vector3 = Vector3(0.5, -0.3, -.15) # droite, bas, vers l'avant
+@export var hold_rotation_offset: Vector3 = Vector3(15, 160, 10) # en degrés
+
 var _mouse_input : bool = false
 var _rotation_input : float
 var _tilt_input : float
 var _mouse_rotation : Vector3
 var _player_rotation : Vector3
 var _camera_rotation : Vector3
+const inventory_max_size = 10
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-
 var in_vision_object : Interactable = null
 @onready var hud : HUD = HudManager.hud
+@onready var playerUI : PlayerUI = HudManager.player_item_hud
 
+@onready var interaction_ray: InteractionRay = $InteractionRay
+
+
+@onready var subMenu : SubItemMenu = HudManager.sub_menu_hud
+
+var current_index : int = 0
+var object_cache : Array = []
 
 func _unhandled_input(event: InputEvent) -> void:
 	
@@ -53,9 +64,11 @@ func _ready():
 
 	# Get mouse input
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	object_cache.resize(10)
 
 func _physics_process(delta):
-	
+	if subMenu.visible: return
 	# Update camera movement based on mouse movement
 	_update_camera(delta)
 	
@@ -80,7 +93,10 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
 	
+	pick_items()
 ## INTERACTION
+
+
 	
 func set_interaction(intraction_body: Interactable) -> void:
 	if intraction_body:
@@ -91,21 +107,128 @@ func set_interaction(intraction_body: Interactable) -> void:
 	hud.show_crossair()
 
 
-func _input(event):
+func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit"):
 		get_tree().quit()
 		
 	if event.is_action_pressed("interact") and in_vision_object:
-		in_vision_object.interact()
+		in_vision_object.interact(self)
+		interaction_ray.interact_body = null
+		set_interaction(null)
+		
+		
+	if event.is_action_pressed("drop"):
+		drop_item()
+		
+		
+	if event is InputEventKey and event.is_pressed() and not event.is_echo():
+		var text = event.as_text()
+		if text.is_valid_int():
+			change_current_index(int(text))
 		
 
+func change_current_index(index : int) -> void:
+	if index == 0:
+		index = 9
+	else:
+		index -= 1
+			
+	if object_cache[current_index]:
+		object_cache[current_index].visible = false
+	
+	current_index = index
+	playerUI.select_new_item(current_index)
+	
+	
+
+	
+func updateUI() -> void:
+	playerUI.update(inventory)
+	
+
+func get_visual_size(body: PhysicsBody3D) -> float:
+	var mesh := body.get_node_or_null("MeshInstance3D")
+	if mesh:
+		return mesh.get_aabb().size.length()
+	return 1.0
+
+func _disable_physics(world_object : PhysicsBody3D) -> void:
+	world_object.collision_layer = 0
+	world_object.collision_mask = 0
+	world_object.freeze = false
+	world_object.gravity_scale = 0.0
+	world_object.linear_damp = 10.0
+	world_object.angular_damp = 10.0
+	
+func _enable_physics(world_object : PhysicsBody3D) -> void:
+	world_object.collision_layer = 1
+	world_object.collision_mask = 1
+	world_object.freeze = false
+	world_object.gravity_scale = 1
+	world_object.linear_damp = 0.05
+	world_object.angular_damp = 0.05
+	
+func _process(delta: float) -> void:
+	if inventory.items[current_index] == null:
+		return
+	if inventory.items[current_index].world_object:
+		return
+	
+	if object_cache[current_index]:
+		if object_cache[current_index].visible == false:
+			pick_items()
+			object_cache[current_index].visible = true
+		return
+	
+	print("creating new items")
+	var item : ItemData = inventory.items[current_index]
+	var scene : PackedScene = item.get_scene()
+	
+	object_cache[current_index] = scene.instantiate()
+	get_tree().current_scene.add_child(object_cache[current_index])
+	_disable_physics(object_cache[current_index])
+	pick_items()
 	
 	
 	
+func pick_items() -> void:
+	if inventory.items[current_index] == null:
+		return	
+	if object_cache[current_index] == null : return
+	
+	var world_object: PhysicsBody3D = object_cache[current_index]
+	if world_object.gravity_scale != 0.0:
+		return
+
+	# Obtenir la taille visuelle du mesh
+	var size = get_visual_size(world_object)
+	var scale_factor = clamp(1.0 / size, 0.4, 1.2)
+
+	# Position décalée comme dans la main
+	var offset = hold_offset + Vector3(0, 0, -size * 0.4)
+	var target_position = CAMERA_CONTROLLER.global_transform.origin + CAMERA_CONTROLLER.global_transform.basis * offset
+
+	# Rotation caméra + offset
+	var base_rot = CAMERA_CONTROLLER.global_transform.basis.get_rotation_quaternion()
+	var extra_rot = Quaternion.from_euler(Vector3(
+		deg_to_rad(hold_rotation_offset.x),
+		deg_to_rad(hold_rotation_offset.y),
+		deg_to_rad(hold_rotation_offset.z)
+	))
+	var final_rot = base_rot * extra_rot
+
+	# Appliquer position, rotation et scale
+	world_object.global_transform.origin = target_position
+	world_object.global_transform.basis = Basis(final_rot)
+	world_object.scale = Vector3.ONE * scale_factor
 	
 	
-	
-	
-	
-	
+func drop_item() -> void:
+	if object_cache[current_index] == null: return
+	var pickable : Pickable = object_cache[current_index].get_meta("interactable")
+	if pickable == null: return	
+	inventory.remove_single_item(current_index)
+	object_cache[current_index] = null
+	updateUI()
+	pickable.drop(CAMERA_CONTROLLER)
 	

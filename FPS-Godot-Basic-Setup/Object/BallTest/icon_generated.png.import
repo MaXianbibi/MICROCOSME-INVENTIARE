@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://s6s85xa1lxce"
-path="res://.godot/imported/readme_img.png-c87ac3de286d8379757c000042cce94f.ctex"
+uid="uid://dabax5blsjupi"
+path="res://.godot/imported/icon_generated.png-cd00ff63cce94fd6f944fa7333b3e2b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://readme_img.png"
-dest_files=["res://.godot/imported/readme_img.png-c87ac3de286d8379757c000042cce94f.ctex"]
+source_file="res://Object/BallTest/icon_generated.png"
+dest_files=["res://.godot/imported/icon_generated.png-cd00ff63cce94fd6f944fa7333b3e2b9.ctex"]
 
 [params]
 

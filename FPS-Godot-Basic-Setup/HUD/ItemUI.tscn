@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5sge06oxpttk"]
+
+[ext_resource type="Script" uid="uid://bkepo6td8nofh" path="res://HUD/item_ui.gd" id="1_mn5w5"]
+[ext_resource type="StyleBox" path="res://HUD/default_style.tres" id="2_mcxiu"]
+
+[node name="TextureRect" type="TextureRect"]
+custom_minimum_size = Vector2(100, 100)
+anchors_preset = -1
+anchor_right = 0.087
+anchor_bottom = 0.154
+offset_right = -100.224
+offset_bottom = -99.792
+mouse_filter = 0
+expand_mode = 1
+script = ExtResource("1_mn5w5")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="."]
+show_behind_parent = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("2_mcxiu")
+metadata/_edit_use_anchors_ = true
+
+[node name="Quantity" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.61
+anchor_top = 0.77
+anchor_right = 1.01
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -3.00001
+offset_right = -3.0
+offset_bottom = -3.0
+horizontal_alignment = 2
+
+[node name="Local_index_label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.4
+anchor_bottom = 0.23
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 5.0
+offset_bottom = 5.0

@@ -1,41 +1,97 @@
-extends CharacterBody3D
+extends Entity
+class_name NPC
 
 @onready var skeletons : Skeleton3D = $Root/Skeleton
-
-const NECK = "Neck"
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
-
-var time_passed: float = 0.0
-
+@onready var animation_tree: AnimationTree = $AnimationTree
 @export var target : Node3D = null
 @onready var look_at : LookAtModifier3D = $Root/Skeleton/lookat1
-@onready var player : Node3D = EntityManager.player as Node3D
+
+const NECK = "Neck"
+var is_finish : bool = false
+
+var interactable : Interactable = null
+
+
+enum State {
+	Idle,
+	Walking,
+	Picking
+}
+
+var state : State = State.Idle
+var last_state : State = State.Picking
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print(get_path_to(player))
-	var bone_index = skeletons.find_bone("Neck")	
-	print("NECK INDEX:", bone_index)
-
-	look_at.target_node = player.get_path() # ✔️ Godot accepte ici une Node3D
-
-func _physics_process(delta: float) -> void:
-	navigation_agent_3d.target_position = player.global_position
+	if target:
+		state = State.Walking
+		var bone_index = skeletons.find_bone("Neck")	
+		look_at.target_node = target.get_path()
+		navigation_agent_3d.target_position = target.global_position
+	play_animation_state()
 	
-	var destination = navigation_agent_3d.get_next_path_position()
-	var local_destination = destination - global_position
-	var direction = local_destination.normalized()
 
-	# Rotation douce vers la cible
-	if direction.length() > 0.1:
-		var target_rotation = atan2(direction.x, direction.z)
-		var new_rotation = lerp_angle(rotation.y, target_rotation, delta * 5.0)
-		rotation.y = new_rotation
+func play_animation_state() -> void:
+	if state == last_state: return
+	last_state = state
+	
+	match  state:
+		State.Idle:
+			animation_tree.set("parameters/Transition/transition_request", "Idle")
+		State.Walking:
+			animation_tree.set("parameters/Transition/transition_request", "Walk")
+		State.Picking:
+			animation_tree.set("parameters/Transition/transition_request", "Pick")
+			
+func move_toward_target(delta) -> void:
+	var destination := navigation_agent_3d.get_next_path_position()
+	var direction := (destination - global_position).normalized()
+	if direction.length() > 0.01:
+		var target_rotation := atan2(direction.x, direction.z)
+		rotation.y = lerp_angle(rotation.y, target_rotation, delta * 5.0)
 
-	# Mouvement
+	# Applique le mouvement seulement si utile
 	velocity = direction * 1.0
 	move_and_slide()
 
-	
+func _physics_process(delta: float) -> void:
+	if target == null: return
+	if not is_finish: move_toward_target(delta)
+		
 func _on_area_3d_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	print("yooo")
+	if body == target:
+		is_finish = true
+		interactable = body.get_meta("interactable")
+		if interactable:
+			state = State.Picking
+			play_animation_state()
+			
+			await get_tree().create_timer(0.7).timeout
+			interactable.interact(self)
+			interactable = null
+			
+			await get_tree().create_timer(2).timeout
+			drop_first_item()
+
+func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
+	return 
+	if anim_name == "Picking Up Object/mixamo_com":
+		interactable.interact(self)
+		interactable = null
+
+
+func drop_first_item() -> void:
+	var item : ItemData = inventory.items[0]
+	if item == null: return
+	
+	var scene : PackedScene = item.get_scene()
+	var world_object : PhysicsBody3D = scene.instantiate()
+	get_tree().current_scene.add_child(world_object)
+	inventory.remove_single_item(0)
+	var pickable : Pickable = world_object.get_meta("interactable")
+	assert(pickable)
+	
+	pickable.drop(self)
+
+	

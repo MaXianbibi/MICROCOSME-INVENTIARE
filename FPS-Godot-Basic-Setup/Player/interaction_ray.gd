@@ -1,4 +1,5 @@
 extends Node
+class_name InteractionRay
 
 const META_INTERACTABLE := "interactable"
 
@@ -11,6 +12,10 @@ var interact_body : Node3D = null
 @onready var hud : HUD = HudManager.hud
 @onready var player : Player = EntityManager.player
 
+
+
+
+
 func _ready() -> void:
 	assert(camera)
 
@@ -22,8 +27,7 @@ func interact_cast() -> Node3D:
 	var query = PhysicsRayQueryParameters3D.create(origin, end)
 	query.collide_with_bodies = true
 	var result = space_state.intersect_ray(query)
-	
-	
+
 	if result.is_empty():
 		return null
 	
@@ -32,7 +36,10 @@ func interact_cast() -> Node3D:
 
 func _physics_process(delta: float) -> void:
 		var collider := interact_cast()
-		if collider == interact_body: return
+		if collider == interact_body:
+			if collider == null and not hud.is_crossair():
+				player.set_interaction(null)
+			return
 
 		if collider == null or !collider.has_meta(META_INTERACTABLE):
 			interact_body = null

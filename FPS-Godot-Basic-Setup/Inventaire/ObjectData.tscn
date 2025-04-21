@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bm6xcqyhwsuy0"]
+
+[ext_resource type="Script" uid="uid://q0fcs410w7rw" path="res://Inventaire/object_data.gd" id="1_lunx6"]
+
+[node name="ObjectData" type="Node"]
+script = ExtResource("1_lunx6")

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=7 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" uid="uid://tyymaesevxdk" path="res://Player/scripts/fps_controller.gd" id="1_pgc1p"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_gldw4"]
 [ext_resource type="PackedScene" uid="uid://duwnkmt5vq6ww" path="res://Player/InteractionRay.tscn" id="3_tok1r"]
+[ext_resource type="PackedScene" uid="uid://dtey8rn74o3ss" path="res://Inventaire/Inventory.tscn" id="4_ddoul"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u6tj1"]
 
@@ -28,3 +29,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="InteractionRay" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("3_tok1r")]
 camera = NodePath("../CameraController/Camera3D")
+
+[node name="Inventory" parent="." instance=ExtResource("4_ddoul")]

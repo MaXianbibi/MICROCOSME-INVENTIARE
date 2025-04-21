@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://b3dew8cg1ftj7"]
+
+[ext_resource type="Texture2D" uid="uid://wtom0ba1r2a2" path="res://Object/Apple/Apple.png" id="1_0hmdb"]
+[ext_resource type="Script" uid="uid://ct84g1tv8f1qs" path="res://Inventaire/ItemData.gd" id="2_ujlug"]
+
+[resource]
+script = ExtResource("2_ujlug")
+id = "RedApple"
+name = "Red Apple"
+size = 1
+description = ""
+icon = ExtResource("1_0hmdb")
+max_stack_size = 20
+weight = 1.0
+item_type = "generic"
+tradable = true
+item_scene = "uid://bsyf2wkwpxo6m"
+custom_data = {}
+local_index = 0
+metadata/_custom_type_script = "uid://ct84g1tv8f1qs"
