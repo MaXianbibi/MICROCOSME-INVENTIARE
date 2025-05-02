@@ -1,14 +1,12 @@
 [gd_scene load_steps=10 format=4 uid="uid://bsyf2wkwpxo6m"]
 
-[ext_resource type="Texture2D" uid="uid://bqyl06gmvevo" path="res://Object/Apple/PolygonShops_Texture_01_A.png" id="2_f22mg"]
+[ext_resource type="Texture2D" uid="uid://dr2gf363uhngs" path="res://Assets/PolygonShops_Texture_04_C.png" id="1_ffwc1"]
 [ext_resource type="PackedScene" uid="uid://bk877ag5jqb1e" path="res://Interactable/Pickable.tscn" id="3_t0cfg"]
 [ext_resource type="PackedScene" uid="uid://bm6xcqyhwsuy0" path="res://Inventaire/ObjectData.tscn" id="4_g7vuk"]
 [ext_resource type="Resource" uid="uid://b3dew8cg1ftj7" path="res://Object/Apple/apple_data.tres" id="5_t0cfg"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u7x0k"]
-albedo_texture = ExtResource("2_f22mg")
-metallic_specular = 0.16
-roughness = 0.3
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t0cfg"]
+albedo_texture = ExtResource("1_ffwc1")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1le2"]
 resource_name = "ShopsSHD"
@@ -57,7 +55,7 @@ radius = 0.0763837
 
 [node name="SM_Prop_Food_Apple_02" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052098, 0)
-material_override = SubResource("StandardMaterial3D_u7x0k")
+material_override = SubResource("StandardMaterial3D_t0cfg")
 mesh = SubResource("ArrayMesh_0shu2")
 skeleton = NodePath("")
 
