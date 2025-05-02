@@ -34,31 +34,22 @@ var current_index : int = 0
 var object_cache : Array = []
 
 func _unhandled_input(event: InputEvent) -> void:
-	
 	_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
 	if _mouse_input:
 		_rotation_input = -event.relative.x * MOUSE_SENSITIVITY
 		_tilt_input = -event.relative.y * MOUSE_SENSITIVITY
 		
-		
 	if event.is_action_pressed("MoveObject") and in_vision_object:
 		print("moving...")
 		var world_object : Node3D = in_vision_object.get_parent()
-		
 		if not can_object_move(world_object): return
-		
 		var pickable : Pickable = world_object.get_node("Pickable")
 		pickable.interact(self)
-		
 		
 func can_object_move(world_object : Node3D) -> bool:
 	if world_object is not StaticBody3D: return false
 	if not world_object.has_node("Pickable"): return false
-	
 	return true
-	
-	
-		
 		
 func _update_camera(delta):
 	
@@ -79,10 +70,8 @@ func _update_camera(delta):
 	_tilt_input = 0.0
 	
 func _ready():
-
 	# Get mouse input
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
 	object_cache.resize(10)
 
 func _physics_process(delta):
@@ -294,7 +283,7 @@ func pick_static_object() -> void:
 	var obj: Node3D = object_cache[current_index]
 
 	# Appliquer un snap facultatif
-	var snap_size: float = 0
+	var snap_size: float = .5
 	var snapped_pos: Vector3 = result["position"].snapped(Vector3(snap_size, snap_size, snap_size))
 	obj.global_position = snapped_pos
 
