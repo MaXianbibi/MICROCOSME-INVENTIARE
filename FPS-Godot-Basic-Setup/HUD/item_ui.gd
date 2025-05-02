@@ -21,7 +21,7 @@ func _ready() -> void:
 		texture = item.icon
 
 
-func _get_drag_data(at_position: Vector2) -> Dictionary:
+func _get_drag_data(_at_position: Vector2) -> Dictionary:
 	if item == null: return {}
 		
 	var preview_texture := TextureRect.new()
@@ -42,11 +42,11 @@ func _get_drag_data(at_position: Vector2) -> Dictionary:
 	return drag_data
 	
 	
-func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
+func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	return data is Dictionary and data.has("item")
 	
 	
-func _drop_data(at_position: Vector2, data: Variant) -> void:
+func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	
 	var from_sub: bool = data.get("is_sub_menu", false)
 	var to_sub := is_sub_menu

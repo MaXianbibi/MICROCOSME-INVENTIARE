@@ -13,7 +13,13 @@ const POLYGON_I = preload("res://Assets/PolygonShops_Texture_04_A.png")
 const POLYGON_J = preload("res://Assets/PolygonShops_Texture_04_B.png")
 const POLYGON_K = preload("res://Assets/PolygonShops_Texture_04_C.png")
 
+
+const OUTLINE = preload("res://Object/OutlineShader/Outline.gdshader")
+var selected_shader : ShaderMaterial
+
 var polygon_texture_array: Array[Texture2D] = []
+var polygon_material_array: Array[StandardMaterial3D] = []
+
 
 func _ready() -> void:
 	polygon_texture_array = [
@@ -30,3 +36,20 @@ func _ready() -> void:
 		POLYGON_J,
 		POLYGON_K
 	]
+
+	for texture in polygon_texture_array:
+		var mat := StandardMaterial3D.new()
+		mat.albedo_texture = texture
+		mat.metallic = 0.0
+		mat.roughness = 1.0
+		polygon_material_array.append(mat)
+		
+	selected_shader = ShaderMaterial.new()
+	selected_shader.shader = OUTLINE
+		
+func get_default_material() -> StandardMaterial3D:
+	return polygon_material_array[0]
+	
+	
+func get_select_static_shader() -> ShaderMaterial:
+	return selected_shader

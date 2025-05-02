@@ -1002,7 +1002,7 @@ moon_base_enegry = 0.1
 environment = ExtResource("2_jf6eg")
 
 [node name="Sun" type="DirectionalLight3D" parent="Main"]
-transform = Transform3D(0.920784, 0, -0.390074, 0.0902765, 0.972851, 0.2131, 0.379484, -0.231434, 0.895784, 0, 0, 0)
+transform = Transform3D(0.920784, 0, -0.390074, 0.0902764, 0.972851, 0.2131, 0.379484, -0.231434, 0.895784, 0, 0, 0)
 rotation_order = 4
 shadow_enabled = true
 shadow_opacity = 0.75
@@ -1109,10 +1109,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.224207, 0, 13.9628)
 
 [node name="Store3" parent="." instance=ExtResource("10_vv1kj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.06, 0, 13.9628)
-
-[node name="Store2" parent="." instance=ExtResource("10_vv1kj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.02293, 0, 13.9628)
-visible = false
 
 [node name="NavigationLink3D" type="NavigationLink3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50498, 0.201731, 7.56092)

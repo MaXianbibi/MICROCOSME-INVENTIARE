@@ -38,6 +38,6 @@ fov = 30.0
 far = 500.0
 
 [node name="Scene" type="Node3D" parent="Node3D"]
-transform = Transform3D(0.986286, -0.0138108, 0.164469, 0, 0.996493, 0.0836778, -0.165048, -0.0825303, 0.982827, 0.225, -0.66, -0.045)
+transform = Transform3D(0.986286, -0.0138108, 0.164468, 0, 0.996493, 0.0836778, -0.165047, -0.0825303, 0.982827, 0.225, -0.66, -0.045)
 
 [connection signal="render_finished" from="." to="." method="_on_render_finished"]

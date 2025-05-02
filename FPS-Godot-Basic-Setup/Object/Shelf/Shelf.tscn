@@ -70,8 +70,3 @@ item_data = ExtResource("3_uotce")
 max_size = 20
 
 [node name="Pickable" parent="." instance=ExtResource("2_1oxtt")]
-hold_distance = 0.5
-pickup_speed = 10.0
-hold_offset = Vector3(0.3, -0.3, -0.5)
-hold_rotation_offset = Vector3(10, 180, 0)
-throw_force = 10.0

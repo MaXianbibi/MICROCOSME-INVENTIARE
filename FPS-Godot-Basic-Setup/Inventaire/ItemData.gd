@@ -16,13 +16,14 @@ const default_texture = preload("res://Assets/PolygonShops_Texture_01_A.png")
 @export var item_scene: String
 @export var custom_data: Dictionary = {}
 @export var local_index : int = 0
+
 enum PhysicBody {
 	Static,
 	Rigid
 }
-@export var physicBody : PhysicBody = PhysicBody.Rigid
 
-@export var world_object_texture: StandardMaterial3D
+@export var physicBody : PhysicBody = PhysicBody.Rigid
+@export var world_object_texture: Material = null
 
 var world_object : PhysicsBody3D = null
 var loaded_scene : PackedScene = null

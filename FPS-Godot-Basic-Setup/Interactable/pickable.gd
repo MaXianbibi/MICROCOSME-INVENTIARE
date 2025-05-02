@@ -81,7 +81,7 @@ func interact(body : Entity = null) -> void:
 	var remaning : int = inventory.add_item(object_data.item_data)	
 	if body is Player: body.updateUI()	
 	
-	parent.queue_free()
+	if parent is StaticBody3D: parent.queue_free()
 	
 
 func _physics_process(delta: float) -> void:
@@ -151,7 +151,10 @@ func drop(controller : Node3D = null) -> void:
 	parent.apply_central_impulse(forward_dir * throw_force)
 	
 func swap_shader() -> void:
-	print("yoo")
+	if object_data == null: set_object_data()
+
+	var outline_shader : ShaderMaterial = TextureManager.get_select_static_shader()
+	object_data.set_mat(outline_shader)
 
 	
 	

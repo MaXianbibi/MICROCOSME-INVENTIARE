@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://bw1dru5hqyo1h"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://bw1dru5hqyo1h"]
 
 [ext_resource type="Texture2D" uid="uid://dabax5blsjupi" path="res://Object/BallTest/icon_generated.png" id="1_5pvgu"]
 [ext_resource type="Script" uid="uid://ct84g1tv8f1qs" path="res://Inventaire/ItemData.gd" id="2_3oodo"]
+[ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://materials/grid.tres" id="3_3oodo"]
 
 [resource]
 script = ExtResource("2_3oodo")
@@ -17,4 +18,6 @@ tradable = true
 item_scene = "uid://clarc3kmoicgs"
 custom_data = {}
 local_index = 0
+physicBody = 1
+world_object_texture = ExtResource("3_3oodo")
 metadata/_custom_type_script = "uid://ct84g1tv8f1qs"

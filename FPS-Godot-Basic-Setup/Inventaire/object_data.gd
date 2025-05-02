@@ -15,14 +15,24 @@ func _ready() -> void:
 	
 	parent.set_meta("objectData", self)
 	mesh_array = get_mesh_array()
-	set_texture(item_data.default_texture)
+
+	set_default_mat()
 	
-func set_texture(texture: Texture2D) -> void:
+func set_default_mat() -> void:
 	if mesh_array.is_empty(): return
 
 	for mesh in mesh_array:
-		var mat := StandardMaterial3D.new()
-		mat.albedo_texture = texture
+		if mesh.material_override: continue
+		
+		if item_data.world_object_texture:
+			mesh.material_override = item_data.world_object_texture
+		else:
+			mesh.material_override = TextureManager.get_default_material()
+			
+func set_mat(mat : Material) -> void:
+	if mesh_array.is_empty(): return
+
+	for mesh in mesh_array:
 		mesh.material_override = mat
 
 	

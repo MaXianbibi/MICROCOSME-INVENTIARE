@@ -112,6 +112,7 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
 	
+	
 	pick_items()
 ## INTERACTION
 
@@ -211,7 +212,11 @@ func process_rigid() -> void:
 
 
 func process_static() -> void:
-	if object_cache[current_index]: return
+	if object_cache[current_index]:
+		if object_cache[current_index].visible == false: 
+			object_cache[current_index].visible = true
+		return
+		
 	var item : ItemData = inventory.items[current_index]
 	var scene : PackedScene = item.get_scene()
 	
@@ -223,7 +228,6 @@ func process_static() -> void:
 	
 	pickable.swap_shader()
 	
-
 func _process(_delta: float) -> void:
 	if inventory.items[current_index] == null:
 		return
@@ -233,18 +237,9 @@ func _process(_delta: float) -> void:
 		
 	if inventory.items[current_index].physicBody == ItemData.PhysicBody.Static:
 		process_static()
-		
-	
-		
-	
-	
-	
-	
-func pick_items() -> void:
-	if inventory.items[current_index] == null:
-		return	
-	if object_cache[current_index] == null : return
-	
+
+
+func pick_rigid_object() -> void:
 	var world_object: PhysicsBody3D = object_cache[current_index]
 	if world_object.gravity_scale != 0.0:
 		return
@@ -271,6 +266,15 @@ func pick_items() -> void:
 	world_object.global_transform.basis = Basis(final_rot)
 	world_object.scale = Vector3.ONE * scale_factor
 	
+
+func pick_items() -> void:
+	if inventory.items[current_index] == null:
+		return	
+	if object_cache[current_index] == null : return
+	
+	if object_cache[current_index] is  RigidBody3D: pick_rigid_object()
+	elif object_cache[current_index] is StaticBody3D: pick_static_object()
+	
 	
 func drop_item() -> void:
 	if object_cache[current_index] == null: return
@@ -281,3 +285,6 @@ func drop_item() -> void:
 	updateUI()
 	pickable.drop(CAMERA_CONTROLLER)
 	
+	
+func pick_static_object() -> void:
+	print("picking static :)")
