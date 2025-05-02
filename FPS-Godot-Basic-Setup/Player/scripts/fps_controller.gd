@@ -219,13 +219,12 @@ func process_static() -> void:
 		
 	var item : ItemData = inventory.items[current_index]
 	var scene : PackedScene = item.get_scene()
-	
 	object_cache[current_index] = scene.instantiate()
 	get_tree().current_scene.add_child(object_cache[current_index])
-	
 	var pickable : Pickable = object_cache[current_index].get_node("Pickable")
 	assert(pickable)
 	
+	pickable._disable_static_physics()	
 	pickable.swap_shader()
 	
 func _process(_delta: float) -> void:
@@ -287,4 +286,35 @@ func drop_item() -> void:
 	
 	
 func pick_static_object() -> void:
-	print("picking static :)")
+	var result : Dictionary = interaction_ray.interact_cast(1000)
+	if result.is_empty(): return
+	
+	object_cache[current_index].global_position = result["position"]
+	var can_place : bool = can_place_object(object_cache[current_index])
+	
+	
+	
+	
+func can_place_object(obj: Node3D) -> bool:
+	# Récupère la première CollisionShape3D trouvée dans l'objet
+	var shape_node: CollisionShape3D = obj.get_node_or_null("CollisionShape3D")
+	if shape_node == null or shape_node.shape == null:
+		return true  # Aucun shape = rien à tester
+
+	var space_state: PhysicsDirectSpaceState3D = obj.get_world_3d().direct_space_state
+	var shape: Shape3D = shape_node.shape
+
+	var query: PhysicsShapeQueryParameters3D = PhysicsShapeQueryParameters3D.new()
+	query.shape = shape
+	query.transform = shape_node.global_transform
+	query.exclude = [obj.get_rid()]
+	query.collision_mask = 1
+
+	var results: Array = space_state.intersect_shape(query, 10)
+	for result_dict in results:
+		var result: Dictionary = result_dict as Dictionary
+		var collider: Node = result.get("collider") as Node
+		if collider != null and not collider.is_in_group("no_blocking"):
+			return false
+
+	return true

@@ -12,6 +12,7 @@ var interact_body : Node3D = null
 @onready var hud : HUD = HudManager.hud
 @onready var player : Player = EntityManager.player
 
+var last_ray_result: Dictionary = {}
 
 
 
@@ -30,35 +31,30 @@ func interact_cast(distance: float = interact_distance) -> Dictionary:
 
 	if result.is_empty():
 		return {}
-	
 	return result
 	
 
 func _physics_process(_delta: float) -> void:
-	var result := interact_cast()
+	last_ray_result = interact_cast()
 
-	# Vérifie d'abord si rien n'a été touché
-	if result.is_empty():
+	if last_ray_result.is_empty():
 		if interact_body != null and not hud.is_crossair():
 			player.set_interaction(null)
 		interact_body = null
 		return
 
-	var collider: Node3D = result["collider"]
+	var collider: Node3D = last_ray_result["collider"]
 
-	# Si c'est le même objet qu'avant, ne fais rien (sauf si null)
 	if collider == interact_body:
 		if collider == null and not hud.is_crossair():
 			player.set_interaction(null)
 		return
 
-	# Si ce n'est pas un objet interactif
 	if collider == null or not collider.has_meta(META_INTERACTABLE):
 		interact_body = null
 		player.set_interaction(null)
 		return
 
-	# Sinon, objet interactif détecté
 	interact_body = collider
 	var interaction: Interactable = interact_body.get_meta(META_INTERACTABLE)
 	player.set_interaction(interaction)

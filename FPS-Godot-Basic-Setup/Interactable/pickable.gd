@@ -149,7 +149,11 @@ func drop(controller : Node3D = null) -> void:
 
 	# Impulsion vers l’avant
 	parent.apply_central_impulse(forward_dir * throw_force)
-	
+
+func _disable_static_physics() -> void:
+	parent.collision_layer = 0
+	parent.collision_mask = 0
+
 func swap_shader() -> void:
 	if object_data == null: set_object_data()
 

@@ -1,7 +1,7 @@
 shader_type spatial;
 render_mode cull_front, unshaded, depth_draw_always;
 
-uniform vec4 outline_color : source_color = vec4(0.0, 0.8, 1.0, 0.5); // Couleur par défaut : cyan semi-transparent
+uniform vec4 outline_color : source_color = vec4(1, 0.8, 1.0, 0.5); // Couleur par défaut : cyan semi-transparent
 uniform float outline_width : hint_range(0.0, 0.05) = 0.015; // Largeur du contour légèrement plus épaisse
 uniform float glow_intensity : hint_range(0.0, 1.0) = 0.3; // Intensité de la lueur
 
