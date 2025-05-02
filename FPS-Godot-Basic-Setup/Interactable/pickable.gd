@@ -154,12 +154,15 @@ func _disable_static_physics() -> void:
 	parent.collision_layer = 0
 	parent.collision_mask = 0
 
-func swap_shader() -> void:
+func set_select_shader() -> void:
 	if object_data == null: set_object_data()
-
+		
 	var outline_shader : ShaderMaterial = TextureManager.get_select_static_shader()
 	object_data.set_mat(outline_shader)
 
+	
+func change_select_color() -> void:
+	if object_data == null: set_object_data()
 	
 	
 	

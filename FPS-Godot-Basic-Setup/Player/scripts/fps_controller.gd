@@ -225,7 +225,7 @@ func process_static() -> void:
 	assert(pickable)
 	
 	pickable._disable_static_physics()	
-	pickable.swap_shader()
+	pickable.set_select_shader()
 	
 func _process(_delta: float) -> void:
 	if inventory.items[current_index] == null:
@@ -286,15 +286,30 @@ func drop_item() -> void:
 	
 	
 func pick_static_object() -> void:
-	var result : Dictionary = interaction_ray.interact_cast(1000)
-	if result.is_empty(): return
+	var result: Dictionary = interaction_ray.interact_cast(1000.0)
+	if result.is_empty():
+		return
+
+	# Récupération de l'objet courant
+	var obj: Node3D = object_cache[current_index]
+
+	# Appliquer un snap facultatif
+	var snap_size: float = 0
+	var snapped_pos: Vector3 = result["position"].snapped(Vector3(snap_size, snap_size, snap_size))
+	obj.global_position = snapped_pos
+
+	# Vérifier si l'objet peut être placé à cette position
+	var can_place: bool = can_place_object(obj)
+
+	# Appliquer le retour visuel
+	if obj.has_meta("objectData"):
+		var object_data: objectData = obj.get_meta("objectData") as objectData
+		if object_data:
+			object_data.change_select_color(can_place)
+
 	
-	object_cache[current_index].global_position = result["position"]
-	var can_place : bool = can_place_object(object_cache[current_index])
 	
-	
-	
-	
+## pas trop didee a savoir comment sa marche, peut probablement causer probleme dans le futur.
 func can_place_object(obj: Node3D) -> bool:
 	# Récupère la première CollisionShape3D trouvée dans l'objet
 	var shape_node: CollisionShape3D = obj.get_node_or_null("CollisionShape3D")
