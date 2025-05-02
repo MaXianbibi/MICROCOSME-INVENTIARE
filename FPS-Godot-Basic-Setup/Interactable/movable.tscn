@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhdbno3nxb0ck"]
+
+[ext_resource type="Script" uid="uid://c5ofw7fu1d561" path="res://Object/Door/movable.gd" id="1_16fj2"]
+
+[node name="Movable" type="Node"]
+script = ExtResource("1_16fj2")

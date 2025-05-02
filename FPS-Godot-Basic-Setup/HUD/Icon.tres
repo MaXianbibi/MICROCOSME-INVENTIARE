@@ -1,6 +1,6 @@
 [gd_resource type="Texture2D" script_class="SceneTexture" load_steps=6 format=4 uid="uid://clw0lhwwjqks5"]
 
-[ext_resource type="PackedScene" uid="uid://uihmc1jsrs6l" path="res://Object/Apple/Apple.tscn" id="1_6j3mh"]
+[ext_resource type="PackedScene" uid="uid://bsyf2wkwpxo6m" path="res://Object/Apple/Apple.tscn" id="1_6j3mh"]
 [ext_resource type="Script" uid="uid://do2yyp08hqg4q" path="res://addons/scene_texture/SceneTexture.gd" id="1_oe17v"]
 
 [sub_resource type="Image" id="Image_6j3mh"]

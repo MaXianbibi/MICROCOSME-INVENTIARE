@@ -1,8 +1,46 @@
-[gd_scene load_steps=3 format=3 uid="uid://cw56iymysy4kb"]
+[gd_scene load_steps=7 format=3 uid="uid://cw56iymysy4kb"]
 
-[ext_resource type="Texture2D" uid="uid://clw0lhwwjqks5" path="res://HUD/Icon.tres" id="1_afr2t"]
+[ext_resource type="PackedScene" uid="uid://bsyf2wkwpxo6m" path="res://Object/Apple/Apple.tscn" id="1_wobsn"]
+[ext_resource type="Script" uid="uid://do2yyp08hqg4q" path="res://addons/scene_texture/SceneTexture.gd" id="2_0iw1t"]
 [ext_resource type="Script" uid="uid://c05wntlwuvvl6" path="res://IconGenerator/icon_generator.gd" id="2_afr2t"]
 
+[sub_resource type="Environment" id="Environment_wobsn"]
+background_mode = 1
+background_color = Color(0, 0, 0, 0)
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+glow_enabled = true
+
+[sub_resource type="World3D" id="World3D_0iw1t"]
+environment = SubResource("Environment_wobsn")
+
+[sub_resource type="Texture2D" id="Texture2D_7emyv"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("2_0iw1t")
+size = Vector2i(512, 512)
+scene = ExtResource("1_wobsn")
+scene_position = Vector3(0, 0, 0)
+scene_rotation = Vector3(0, 0, 0)
+scene_scale = Vector3(1, 1, 1)
+camera_distance = 0.41
+camera_position = Vector3(0, 0.025, 0)
+camera_rotation = Vector3(-0.698132, -0.436332, 0)
+light_color = Color(1, 1, 1, 1)
+light_energy = 2.5
+light_angular_distance = 0.0
+light_shadow = false
+light_rotation = Vector3(-1.0472, 1.0472, 0)
+render_world_3d = SubResource("World3D_0iw1t")
+render_transparent_bg = true
+render_auto_bake = true
+render_store_bake = false
+render_msaa_3d = 3
+render_screen_space_aa = 1
+metadata/_custom_type_script = "uid://do2yyp08hqg4q"
+
 [node name="IconGenerator" type="TextureRect"]
-texture = ExtResource("1_afr2t")
+texture = SubResource("Texture2D_7emyv")
 script = ExtResource("2_afr2t")

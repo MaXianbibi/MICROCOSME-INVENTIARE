@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://ce7vb0e1icrsn"]
+[gd_scene load_steps=11 format=4 uid="uid://ce7vb0e1icrsn"]
 
 [ext_resource type="Texture2D" uid="uid://bqyl06gmvevo" path="res://Object/Apple/PolygonShops_Texture_01_A.png" id="1_pm1jk"]
+[ext_resource type="PackedScene" uid="uid://bk877ag5jqb1e" path="res://Interactable/Pickable.tscn" id="2_1oxtt"]
 [ext_resource type="PackedScene" uid="uid://dtey8rn74o3ss" path="res://Inventaire/Inventory.tscn" id="2_084tw"]
+[ext_resource type="PackedScene" uid="uid://bm6xcqyhwsuy0" path="res://Inventaire/ObjectData.tscn" id="2_ue71q"]
+[ext_resource type="Resource" uid="uid://c3cdpa5tcjuyy" path="res://Object/Shelf/Shelf.tres" id="3_uotce"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_084tw"]
 albedo_texture = ExtResource("1_pm1jk")
@@ -49,7 +52,7 @@ shadow_mesh = SubResource("ArrayMesh_ujbrn")
 [sub_resource type="BoxShape3D" id="BoxShape3D_1oxtt"]
 size = Vector3(2.90869, 1.88184, 0.943848)
 
-[node name="Shelf" type="StaticBody3D"]
+[node name="Shelf" type="StaticBody3D" groups=["Shelf"]]
 
 [node name="SM_Prop_Shop_Shelf_Basic_02" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_084tw")
@@ -60,5 +63,15 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00219727, 0.950684, 0.0280762)
 shape = SubResource("BoxShape3D_1oxtt")
 
+[node name="ObjectData" parent="." instance=ExtResource("2_ue71q")]
+item_data = ExtResource("3_uotce")
+
 [node name="Inventory" parent="." instance=ExtResource("2_084tw")]
 max_size = 20
+
+[node name="Pickable" parent="." instance=ExtResource("2_1oxtt")]
+hold_distance = 0.5
+pickup_speed = 10.0
+hold_offset = Vector3(0.3, -0.3, -0.5)
+hold_rotation_offset = Vector3(10, 180, 0)
+throw_force = 10.0

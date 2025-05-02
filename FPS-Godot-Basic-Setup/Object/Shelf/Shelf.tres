@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://c3cdpa5tcjuyy"]
+
+[ext_resource type="Script" uid="uid://ct84g1tv8f1qs" path="res://Inventaire/ItemData.gd" id="1_5j6tp"]
+[ext_resource type="Texture2D" uid="uid://dllya6y1qnixf" path="res://Object/Shelf/Shelf_icon.png" id="1_ybtif"]
+
+[resource]
+script = ExtResource("1_5j6tp")
+id = "LargeShelf"
+name = "Large Shelf"
+size = 1
+description = ""
+icon = ExtResource("1_ybtif")
+max_stack_size = 20
+weight = 1.0
+item_type = "generic"
+tradable = true
+item_scene = "uid://ce7vb0e1icrsn"
+custom_data = {}
+local_index = 0
+physicBody = 0
+metadata/_custom_type_script = "uid://ct84g1tv8f1qs"

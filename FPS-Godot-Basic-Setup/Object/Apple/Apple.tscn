@@ -7,6 +7,8 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u7x0k"]
 albedo_texture = ExtResource("2_f22mg")
+metallic_specular = 0.16
+roughness = 0.3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1le2"]
 resource_name = "ShopsSHD"

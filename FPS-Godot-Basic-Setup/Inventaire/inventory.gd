@@ -5,20 +5,34 @@ var items: Array = []
 
 @export var max_size : int = 10
 var current_index : int = 0
-
 @onready var sub_menu_hud : SubItemMenu = HudManager.sub_menu_hud
 
 func interact(body : Entity = null) -> void:
-	sub_menu_hud.init_sub_menu(self)
+	if body is Player:
+		sub_menu_hud.init_sub_menu(self)
+	
+		
 
 
 func init() -> void:
 	interaction_name = "Access to "
-	_name = "shelf storage"
+	_name = parent.name
 	items.resize(max_size)
 
-func add_to_array(item : ItemData) -> bool:
-	var index = items.find(null)
+func add_to_array(item : ItemData, decl_index : int = -1) -> bool:
+	var index : int = 0
+	
+	
+	
+	if decl_index != -1:
+		index = decl_index
+	elif parent is Player and items[player.current_index] == null:
+		index = player.current_index
+	elif items[item.local_index] == null:
+		index = item.local_index		 
+	else:
+		index = items.find(null)
+		
 	if index == -1:
 		return false
 	
@@ -29,19 +43,23 @@ func add_to_array(item : ItemData) -> bool:
 	items[index] = new_item
 	return true
 
-func add_single_item(item_data: ItemData) -> bool:
-	var item_index = items.find_custom(func(item): 
+func add_single_item(item_data: ItemData, index : int = -1) -> bool:
+	var item_index : int = 0
+
+	item_index = items.find_custom(func(item): 
 		if item == null: return false	
 		return item.id == item_data.id and item.size < item.max_stack_size
 	)
-
+	
+	
+	
 	if item_index == -1:
-		return add_to_array(item_data)	
+		return add_to_array(item_data, index)	
 	var item : ItemData = items[item_index]
 	if item.add(1) == false:
 		return add_to_array(item_data)
-		
 	return true
+	
 	
 func add_item(item_data: ItemData) -> int:
 	for n in item_data.size:
@@ -58,6 +76,16 @@ func remove_single_item(index : int) -> bool:
 	if item.size == 0:
 		items[index] = null
 	return true
+	
+
+	
+func swap_item(from_index: int, to_index: int) -> void:
+	var temp : ItemData = items[from_index]
+	items[from_index] = items[to_index]
+	items[to_index] = temp
+	
+	items[to_index].local_index = to_index
+	print("NEW LOCAL INDEX : ", items[to_index].local_index)
 	
 func logs() -> void:
 	print("---------------------------------------------")

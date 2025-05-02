@@ -3,12 +3,13 @@ class_name Interactable
 
 
 @onready var parent : PhysicsBody3D = get_parent()
+@onready var player : Player = EntityManager.player
 
-var player : Player = EntityManager.player
 var key := "E"
 var interaction_name = "Do nothing"
-var _name := "nothing"
+var _name := ""
 var hud : HUD = HudManager.hud
+
 
 func interact(body : Entity = null) -> void:
 	push_error("Not supposed to be interact with")
@@ -16,7 +17,15 @@ func interact(body : Entity = null) -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	assert(parent)
-	parent.set_meta("interactable", self)
+	
+	
+	var interactionMeta = null
+	
+	if parent.has_meta("interactable"):
+		interactionMeta = parent.get_meta("interactable", null)
+	if interactionMeta == null or interactionMeta is Movable:		
+		parent.set_meta("interactable", self)
+	
 	init()
 
 func init() -> void:

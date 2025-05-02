@@ -47,6 +47,7 @@ func _physics_process(delta: float) -> void:
 			return
 		
 		interact_body = collider
+		
 		var interaction : Interactable = interact_body.get_meta(META_INTERACTABLE)
 		player.set_interaction(interaction)
 

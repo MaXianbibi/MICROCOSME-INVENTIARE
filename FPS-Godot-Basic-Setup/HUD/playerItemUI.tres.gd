@@ -5,7 +5,6 @@ class_name PlayerUI
 const ITEM_UI = preload("res://HUD/ItemUI.tscn")
 
 var current_index : int = 0
-
 var item_ui_array : Array = []
 
 func _ready() -> void:
@@ -14,6 +13,7 @@ func _ready() -> void:
 	for n in player_inventory_size:
 		var item_ui : ItemUI = ITEM_UI.instantiate()
 		item_ui.local_index = n
+		item_ui.is_sub_menu = false
 		item_ui_array.append(item_ui)
 		add_child(item_ui)
 		
@@ -21,7 +21,6 @@ func _ready() -> void:
 
 func update(inventory : Inventory) -> void:
 	for n in inventory.max_size:
-		print(inventory.items[n])
 		item_ui_array[n].item = inventory.items[n]
 		item_ui_array[n].update()
 		

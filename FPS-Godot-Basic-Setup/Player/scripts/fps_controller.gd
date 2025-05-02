@@ -25,11 +25,10 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var in_vision_object : Interactable = null
 @onready var hud : HUD = HudManager.hud
 @onready var playerUI : PlayerUI = HudManager.player_item_hud
-
 @onready var interaction_ray: InteractionRay = $InteractionRay
-
-
 @onready var subMenu : SubItemMenu = HudManager.sub_menu_hud
+
+var interaction_dict : Dictionary = {}
 
 var current_index : int = 0
 var object_cache : Array = []
@@ -40,6 +39,25 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _mouse_input:
 		_rotation_input = -event.relative.x * MOUSE_SENSITIVITY
 		_tilt_input = -event.relative.y * MOUSE_SENSITIVITY
+		
+		
+	if event.is_action_pressed("MoveObject") and in_vision_object:
+		print("moving...")
+		var world_object : Node3D = in_vision_object.get_parent()
+		
+		if not can_object_move(world_object): return
+		
+		var pickable : Pickable = world_object.get_node("Pickable")
+		pickable.interact(self)
+		
+		
+func can_object_move(world_object : Node3D) -> bool:
+	if world_object is not StaticBody3D: return false
+	if not world_object.has_node("Pickable"): return false
+	
+	return true
+	
+	
 		
 		
 func _update_camera(delta):
@@ -68,7 +86,8 @@ func _ready():
 	object_cache.resize(10)
 
 func _physics_process(delta):
-	if subMenu.visible: return
+	if subMenu.visible:
+		return
 	# Update camera movement based on mouse movement
 	_update_camera(delta)
 	
@@ -114,8 +133,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and in_vision_object:
 		in_vision_object.interact(self)
 		interaction_ray.interact_body = null
-		set_interaction(null)
-		
+		set_interaction(null)	
 		
 	if event.is_action_pressed("drop"):
 		drop_item()
@@ -144,6 +162,11 @@ func change_current_index(index : int) -> void:
 	
 func updateUI() -> void:
 	playerUI.update(inventory)
+	for world_object in object_cache:
+		if world_object:
+			world_object.queue_free()
+			
+	object_cache.fill(null)
 	
 
 func get_visual_size(body: PhysicsBody3D) -> float:
@@ -152,7 +175,7 @@ func get_visual_size(body: PhysicsBody3D) -> float:
 		return mesh.get_aabb().size.length()
 	return 1.0
 
-func _disable_physics(world_object : PhysicsBody3D) -> void:
+func _disable_physics(world_object : RigidBody3D) -> void:
 	world_object.collision_layer = 0
 	world_object.collision_mask = 0
 	world_object.freeze = false
@@ -160,7 +183,7 @@ func _disable_physics(world_object : PhysicsBody3D) -> void:
 	world_object.linear_damp = 10.0
 	world_object.angular_damp = 10.0
 	
-func _enable_physics(world_object : PhysicsBody3D) -> void:
+func _enable_physics(world_object : RigidBody3D) -> void:
 	world_object.collision_layer = 1
 	world_object.collision_mask = 1
 	world_object.freeze = false
@@ -168,11 +191,9 @@ func _enable_physics(world_object : PhysicsBody3D) -> void:
 	world_object.linear_damp = 0.05
 	world_object.angular_damp = 0.05
 	
-func _process(delta: float) -> void:
-	if inventory.items[current_index] == null:
-		return
-	if inventory.items[current_index].world_object:
-		return
+
+func process_rigid() -> void:
+	if inventory.items[current_index].world_object: return
 	
 	if object_cache[current_index]:
 		if object_cache[current_index].visible == false:
@@ -180,7 +201,6 @@ func _process(delta: float) -> void:
 			object_cache[current_index].visible = true
 		return
 	
-	print("creating new items")
 	var item : ItemData = inventory.items[current_index]
 	var scene : PackedScene = item.get_scene()
 	
@@ -188,6 +208,35 @@ func _process(delta: float) -> void:
 	get_tree().current_scene.add_child(object_cache[current_index])
 	_disable_physics(object_cache[current_index])
 	pick_items()
+
+
+func process_static() -> void:
+	if object_cache[current_index]: return
+	var item : ItemData = inventory.items[current_index]
+	var scene : PackedScene = item.get_scene()
+	
+	object_cache[current_index] = scene.instantiate()
+	get_tree().current_scene.add_child(object_cache[current_index])
+	
+	var pickable : Pickable = object_cache[current_index].get_node("Pickable")
+	assert(pickable)
+	
+	pickable.swap_shader()
+	
+
+func _process(_delta: float) -> void:
+	if inventory.items[current_index] == null:
+		return
+	
+	if inventory.items[current_index].physicBody == ItemData.PhysicBody.Rigid:
+		process_rigid()
+		
+	if inventory.items[current_index].physicBody == ItemData.PhysicBody.Static:
+		process_static()
+		
+	
+		
+	
 	
 	
 	

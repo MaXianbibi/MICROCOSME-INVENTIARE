@@ -8,32 +8,37 @@ class_name Pickable
 @export var hold_rotation_offset: Vector3 = Vector3(10, 180, 0)
 @export var throw_force: float = 10.0
 
+#@onready var original_texture : Texture2D = texture
+
+const OUTLINE = preload("res://Object/OutlineShader/Outline.gdshader")
 
 var object_data : objectData = null
 var controller : Entity = null
 var is_in_transition : bool = false
 
 func init() -> void:
+	await get_tree().process_frame
+	interaction_name = "pick up "
+	
 	if parent.has_meta("objectData"):
 		object_data = parent.get_meta("objectData")
 		
 		if object_data:
 			object_data.item_data.world_object = parent
-	
+			_name = object_data.item_data.name
 
-
-	
 func set_object_data() -> void:
 	object_data = parent.get_meta("objectData")
 	assert(object_data)
 	
 	if object_data and object_data.item_data:
 		object_data.item_data = object_data.item_data.duplicate(true)
-	
-	
+		_name = object_data.item_data.name
+		
 func transition(delta : float) -> void:
+	if parent is not RigidBody3D: return
+	
 	var target_position = controller.global_transform.origin + controller.global_transform.basis * hold_offset
-
 	var target_rot = controller.global_transform.basis.get_rotation_quaternion()
 	var offset_rot = Quaternion.from_euler(Vector3(
 		deg_to_rad(hold_rotation_offset.x),
@@ -57,7 +62,6 @@ func transition(delta : float) -> void:
 			parent.hide()
 			parent.queue_free()
 			object_data.item_data.world_object = null
-			print("free called ! : ", object_data.item_data.world_object)
 	return
 	
 	
@@ -69,13 +73,15 @@ func interact(body : Entity = null) -> void:
 	if inventory == null:
 		push_error("Entity has no Inventory")
 		return
-	
+		
+		
 	controller = body
 	is_in_transition = true
-	var remaning : int = inventory.add_item(object_data.item_data)	
-	if body is Player: body.updateUI()
 	
-	inventory.logs() 
+	var remaning : int = inventory.add_item(object_data.item_data)	
+	if body is Player: body.updateUI()	
+	
+	parent.queue_free()
 	
 
 func _physics_process(delta: float) -> void:
@@ -143,6 +149,9 @@ func drop(controller : Node3D = null) -> void:
 
 	# Impulsion vers l’avant
 	parent.apply_central_impulse(forward_dir * throw_force)
+	
+func swap_shader() -> void:
+	print("yoo")
 
 	
 	
