@@ -8,6 +8,8 @@ var current_index : int = 0
 @onready var sub_menu_hud : SubItemMenu = HudManager.sub_menu_hud
 
 func interact(body : Entity = null) -> void:
+	if sub_menu_hud.visible == true: return
+	
 	if body is Player:
 		sub_menu_hud.init_sub_menu(self)
 	

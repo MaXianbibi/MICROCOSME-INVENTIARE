@@ -1,6 +1,11 @@
 extends Entity
 class_name Player
 
+const SNAP_ANGLE := deg_to_rad(45)
+const SNAP_STRENGTH := 0.2 # 0.0 = ignore le snap, 1.0 = snap immédiat
+
+
+
 @export var SPEED : float = 5.0
 @export var JUMP_VELOCITY : float = 4.5
 @export var MOUSE_SENSITIVITY : float = 0.5
@@ -33,6 +38,28 @@ var interaction_dict : Dictionary = {}
 var current_index : int = 0
 var object_cache : Array = []
 
+func snap_object_rotation(obj: Node3D, direction: float) -> void:
+	var static_obj := obj as StaticBody3D
+	if static_obj == null:
+		return
+
+	var angle := wrapf(static_obj.rotation.y, 0.0, TAU)
+
+	var snapped_angle: float
+	if direction > 0.0:
+		snapped_angle = ceil(angle / SNAP_ANGLE) * SNAP_ANGLE
+	else:
+		snapped_angle = floor(angle / SNAP_ANGLE) * SNAP_ANGLE
+
+	var rot := static_obj.rotation
+	rot.y = snapped_angle
+	static_obj.rotation = rot
+
+
+
+
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
 	if _mouse_input:
@@ -40,11 +67,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		_tilt_input = -event.relative.y * MOUSE_SENSITIVITY
 		
 	if event.is_action_pressed("MoveObject") and in_vision_object:
-		print("moving...")
 		var world_object : Node3D = in_vision_object.get_parent()
 		if not can_object_move(world_object): return
 		var pickable : Pickable = world_object.get_node("Pickable")
 		pickable.interact(self)
+		
+	if event.is_action_pressed("shoot"):
+		if object_cache[current_index] is StaticBody3D:
+			place_static_object()
+			
+	if event.is_action_released("drop"):
+		if object_cache[current_index] is StaticBody3D:
+			snap_object_rotation(object_cache[current_index], 1)
 		
 func can_object_move(world_object : Node3D) -> bool:
 	if world_object is not StaticBody3D: return false
@@ -103,6 +137,9 @@ func _physics_process(delta):
 	
 	
 	pick_items()
+	
+	if Input.is_action_pressed("drop"):
+		drop_item()
 ## INTERACTION
 
 
@@ -125,8 +162,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		interaction_ray.interact_body = null
 		set_interaction(null)	
 		
-	if event.is_action_pressed("drop"):
-		drop_item()
+	#if event.is_action("drop"):
+		#drop_item()
 		
 		
 	if event is InputEventKey and event.is_pressed() and not event.is_echo():
@@ -210,6 +247,12 @@ func process_static() -> void:
 	var scene : PackedScene = item.get_scene()
 	object_cache[current_index] = scene.instantiate()
 	get_tree().current_scene.add_child(object_cache[current_index])
+	
+	
+	object_cache[current_index].global_rotation = global_rotation
+	
+	snap_object_rotation(object_cache[current_index], 0)
+	
 	var pickable : Pickable = object_cache[current_index].get_node("Pickable")
 	assert(pickable)
 	
@@ -263,15 +306,25 @@ func pick_items() -> void:
 	if object_cache[current_index] is  RigidBody3D: pick_rigid_object()
 	elif object_cache[current_index] is StaticBody3D: pick_static_object()
 	
-	
-func drop_item() -> void:
-	if object_cache[current_index] == null: return
+
+func drop_rigid() -> void:
 	var pickable : Pickable = object_cache[current_index].get_meta("interactable")
 	if pickable == null: return	
 	inventory.remove_single_item(current_index)
 	object_cache[current_index] = null
 	updateUI()
 	pickable.drop(CAMERA_CONTROLLER)
+	
+
+func apply_snapped_rotation(obj: StaticBody3D, amount: float) -> void:
+	obj.rotate_y(amount)
+
+
+	
+func drop_item() -> void:
+	if object_cache[current_index] == null: return
+	if object_cache[current_index] is RigidBody3D: drop_rigid()
+	elif object_cache[current_index] is StaticBody3D: apply_snapped_rotation(object_cache[current_index], .0625)
 	
 	
 func pick_static_object() -> void:
@@ -322,3 +375,21 @@ func can_place_object(obj: Node3D) -> bool:
 			return false
 
 	return true
+
+
+func place_static_object() -> void:
+	var world_object : StaticBody3D = object_cache[current_index]
+	if not can_place_object(world_object): return
+	
+	inventory.remove_single_item(current_index)	
+	object_cache[current_index] = null
+	updateUI()
+	set_interaction(null)
+	
+	world_object.collision_layer = 1
+	world_object.collision_mask = 1
+	
+	var object_data: objectData = world_object.get_meta("objectData")
+	object_data.set_item_mat()
+	
+	

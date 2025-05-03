@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://c3cdpa5tcjuyy"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://c3cdpa5tcjuyy"]
 
 [ext_resource type="Script" uid="uid://ct84g1tv8f1qs" path="res://Inventaire/ItemData.gd" id="1_5j6tp"]
 [ext_resource type="Texture2D" uid="uid://dllya6y1qnixf" path="res://Object/Shelf/Shelf_icon.png" id="1_ybtif"]
+[ext_resource type="Texture2D" uid="uid://bqyl06gmvevo" path="res://Object/Apple/PolygonShops_Texture_01_A.png" id="3_jpcwj"]
 
 [resource]
 script = ExtResource("1_5j6tp")
@@ -18,4 +19,5 @@ item_scene = "uid://ce7vb0e1icrsn"
 custom_data = {}
 local_index = 0
 physicBody = 0
+world_object_texture = ExtResource("3_jpcwj")
 metadata/_custom_type_script = "uid://ct84g1tv8f1qs"

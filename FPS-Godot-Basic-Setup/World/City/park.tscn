@@ -1,4 +1,4 @@
-[gd_scene load_steps=216 format=4 uid="uid://b1r45cgbrnljf"]
+[gd_scene load_steps=218 format=4 uid="uid://b1r45cgbrnljf"]
 
 [ext_resource type="Texture2D" uid="uid://cajh6xsbgk84a" path="res://Assets/City/Textures/PolygonCity_Texture.png" id="1_di8ox"]
 [ext_resource type="PackedScene" uid="uid://bcr6ws5yna40e" path="res://HUD/HUD.tscn" id="1_rkd2h"]
@@ -52,10 +52,12 @@
 [ext_resource type="ArrayMesh" uid="uid://xgslfj3k07io" path="res://Assets/City/OBJ/SM_Bld_Cover_01.obj" id="49_dxiow"]
 [ext_resource type="ArrayMesh" uid="uid://crbliy6qkai8y" path="res://Assets/City/OBJ/SM_Bld_Apartment_Roof_Corner_02.obj" id="49_mabqq"]
 [ext_resource type="ArrayMesh" uid="uid://cmph60kwcr3o6" path="res://Assets/City/OBJ/SM_Prop_PlanterWindow_02.obj" id="49_ohb64"]
+[ext_resource type="Texture2D" uid="uid://dnxje03w6uolt" path="res://Assets/City/Textures/Emissive_05.png" id="49_rkd2h"]
 [ext_resource type="ArrayMesh" uid="uid://cvhshq241lncs" path="res://Assets/City/OBJ/SM_Bld_Shop_Cover_04.obj" id="50_g37yu"]
 [ext_resource type="ArrayMesh" uid="uid://bueao1l8nciod" path="res://Assets/City/OBJ/SM_Bld_Cover_02.obj" id="51_dxiow"]
 [ext_resource type="ArrayMesh" uid="uid://bi48jbp1wvf5s" path="res://Assets/City/OBJ/SM_Prop_Aircon_01.obj" id="53_w6n8r"]
 [ext_resource type="PackedScene" uid="uid://c3ffql15mo0aj" path="res://Player/Player.tscn" id="58_vlfs0"]
+[ext_resource type="PackedScene" uid="uid://cehrj81rgpwbn" path="res://Assets/Store/FBX/SM_Bld_Base_Pillar_05.fbx" id="59_mygxi"]
 [ext_resource type="PackedScene" uid="uid://c7xlv1gunoh8o" path="res://PNG/PNG.tscn" id="60_mygxi"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_11qeb"]
@@ -456,6 +458,8 @@ albedo_texture = ExtResource("1_di8ox")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_51qf4"]
 albedo_texture = ExtResource("1_di8ox")
+emission_enabled = true
+emission_texture = ExtResource("49_rkd2h")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ipco"]
 albedo_texture = ExtResource("1_di8ox")
@@ -489,9 +493,12 @@ albedo_texture = ExtResource("1_di8ox")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fl5p2"]
 albedo_texture = ExtResource("1_di8ox")
+emission_enabled = true
+emission_texture = ExtResource("49_rkd2h")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_toyg0"]
 albedo_texture = ExtResource("1_di8ox")
+emission_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2hvhm"]
 albedo_texture = ExtResource("1_di8ox")
@@ -3463,3 +3470,9 @@ skeleton = NodePath("")
 transform = Transform3D(6.70552e-08, 0, 1, 0, 1, 0, -1, 0, 6.70552e-08, -2.55, 0, -2.55)
 mesh = SubResource("ArrayMesh_oiaue")
 skeleton = NodePath("")
+
+[node name="SM_Bld_ShopFront_07" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -23.5784, 0.0917234, -7.05789)
+
+[node name="SM_Bld_Base_Pillar_05" parent="." instance=ExtResource("59_mygxi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -10)

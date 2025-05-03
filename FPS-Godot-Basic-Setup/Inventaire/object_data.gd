@@ -43,11 +43,9 @@ func set_mat(mat : Material) -> void:
 
 func set_item_mat() -> void:
 	if mesh_array.is_empty(): return
-	if item_data.world_object_texture == null: return
 	
 	for mesh in mesh_array:		
-		if item_data.world_object_texture:
-			mesh.material_override = item_data.world_object_texture
+			mesh.material_override = TextureManager.get_default_material()
 
 
 func change_select_color(can_place: bool) -> void:
@@ -57,7 +55,6 @@ func change_select_color(can_place: bool) -> void:
 	if is_placable == can_place:
 		return
 	
-	print("yooo ; )")
 	is_placable = can_place
 	var color_to_apply: Color = COLOR_VALID if can_place else COLOR_INVALID
 

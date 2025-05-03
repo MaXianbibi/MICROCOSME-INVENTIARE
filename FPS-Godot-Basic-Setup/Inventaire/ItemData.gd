@@ -22,7 +22,7 @@ enum PhysicBody {
 }
 
 @export var physicBody : PhysicBody = PhysicBody.Rigid
-@export var world_object_texture: Material = null
+@export var world_object_texture: Texture2D = null
 
 var world_object : PhysicsBody3D = null
 var loaded_scene : PackedScene = null
