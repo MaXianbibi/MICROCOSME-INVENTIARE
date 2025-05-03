@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cvhshq241lncs"
+path="res://.godot/imported/SM_Bld_Shop_Cover_04.obj-d6c4f6639d2d7ca140ee7ce5a8c2afde.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SM_Bld_Shop_Cover_04.obj-d6c4f6639d2d7ca140ee7ce5a8c2afde.mesh"]
+
+source_file="res://Assets/City/OBJ/SM_Bld_Shop_Cover_04.obj"
+dest_files=["res://.godot/imported/SM_Bld_Shop_Cover_04.obj-d6c4f6639d2d7ca140ee7ce5a8c2afde.mesh", "res://.godot/imported/SM_Bld_Shop_Cover_04.obj-d6c4f6639d2d7ca140ee7ce5a8c2afde.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

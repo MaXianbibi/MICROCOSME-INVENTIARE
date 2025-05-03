@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=4 uid="uid://bsyf2wkwpxo6m"]
 
-[ext_resource type="Texture2D" uid="uid://dr2gf363uhngs" path="res://Assets/PolygonShops_Texture_04_C.png" id="1_ffwc1"]
+[ext_resource type="Texture2D" uid="uid://dr2gf363uhngs" path="res://Assets/Store/Texture/PolygonShops_Texture_04_C.png" id="1_ffwc1"]
 [ext_resource type="PackedScene" uid="uid://bk877ag5jqb1e" path="res://Interactable/Pickable.tscn" id="3_t0cfg"]
 [ext_resource type="PackedScene" uid="uid://bm6xcqyhwsuy0" path="res://Inventaire/ObjectData.tscn" id="4_g7vuk"]
 [ext_resource type="Resource" uid="uid://b3dew8cg1ftj7" path="res://Object/Apple/apple_data.tres" id="5_t0cfg"]

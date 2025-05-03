@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://pmagjykur1rt"
+path="res://.godot/imported/SM_Prop_Sign_Warning_01.obj-796ac3b9ba0753767322ca360758533e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SM_Prop_Sign_Warning_01.obj-796ac3b9ba0753767322ca360758533e.mesh"]
+
+source_file="res://Assets/City/OBJ/SM_Prop_Sign_Warning_01.obj"
+dest_files=["res://.godot/imported/SM_Prop_Sign_Warning_01.obj-796ac3b9ba0753767322ca360758533e.mesh", "res://.godot/imported/SM_Prop_Sign_Warning_01.obj-796ac3b9ba0753767322ca360758533e.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

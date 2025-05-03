@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c3csd5a31boa0"
+path="res://.godot/imported/SM_Env_Road_Patch_01.obj-ebb868a69725f3c45f8ffae371859117.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SM_Env_Road_Patch_01.obj-ebb868a69725f3c45f8ffae371859117.mesh"]
+
+source_file="res://Assets/City/OBJ/SM_Env_Road_Patch_01.obj"
+dest_files=["res://.godot/imported/SM_Env_Road_Patch_01.obj-ebb868a69725f3c45f8ffae371859117.mesh", "res://.godot/imported/SM_Env_Road_Patch_01.obj-ebb868a69725f3c45f8ffae371859117.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

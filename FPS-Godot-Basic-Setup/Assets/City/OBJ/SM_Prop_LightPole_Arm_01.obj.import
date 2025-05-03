@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dyd8osva440xs"
+path="res://.godot/imported/SM_Prop_LightPole_Arm_01.obj-0294f72e75a5b10841693c1fa958cbed.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SM_Prop_LightPole_Arm_01.obj-0294f72e75a5b10841693c1fa958cbed.mesh"]
+
+source_file="res://Assets/City/OBJ/SM_Prop_LightPole_Arm_01.obj"
+dest_files=["res://.godot/imported/SM_Prop_LightPole_Arm_01.obj-0294f72e75a5b10841693c1fa958cbed.mesh", "res://.godot/imported/SM_Prop_LightPole_Arm_01.obj-0294f72e75a5b10841693c1fa958cbed.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

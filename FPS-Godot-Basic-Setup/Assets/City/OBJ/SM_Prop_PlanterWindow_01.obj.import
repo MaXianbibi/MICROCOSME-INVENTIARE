@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b8k06iy2nlab4"
+path="res://.godot/imported/SM_Prop_PlanterWindow_01.obj-5e80789b0a7fc0d9771ba6d06c07a0ca.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SM_Prop_PlanterWindow_01.obj-5e80789b0a7fc0d9771ba6d06c07a0ca.mesh"]
+
+source_file="res://Assets/City/OBJ/SM_Prop_PlanterWindow_01.obj"
+dest_files=["res://.godot/imported/SM_Prop_PlanterWindow_01.obj-5e80789b0a7fc0d9771ba6d06c07a0ca.mesh", "res://.godot/imported/SM_Prop_PlanterWindow_01.obj-5e80789b0a7fc0d9771ba6d06c07a0ca.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

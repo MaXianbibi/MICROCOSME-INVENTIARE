@@ -12,10 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://1kf7tghowy22" path="res://City/Texture/textures/textures/_albedo000.png" id="10_up81d"]
 [ext_resource type="PackedScene" uid="uid://cxmec6hyugdc1" path="res://World/Store.tscn" id="10_vv1kj"]
 [ext_resource type="Shader" uid="uid://g6qxiylgy47k" path="res://Object/OutlineShader/Outline.gdshader" id="12_skit2"]
-[ext_resource type="Texture2D" uid="uid://cuty6vweiqmft" path="res://Assets/PolygonShops_Texture_02_C.png" id="13_qnpsc"]
-[ext_resource type="Texture2D" uid="uid://b1iu505t60y13" path="res://Assets/PolygonShops_Texture_01_Colour_Emissive.png" id="14_ede1j"]
-[ext_resource type="Texture2D" uid="uid://codcvrar1mud" path="res://Assets/PolygonShops_Texture_04_A.png" id="15_q6ev5"]
-[ext_resource type="Texture2D" uid="uid://c702ys384863y" path="res://Assets/PolygonShops_Texture_02_A.png" id="16_0vhn0"]
+[ext_resource type="Texture2D" uid="uid://cuty6vweiqmft" path="res://Assets/Store/Texture/PolygonShops_Texture_02_C.png" id="13_qnpsc"]
+[ext_resource type="Texture2D" uid="uid://b1iu505t60y13" path="res://Assets/Store/Texture/PolygonShops_Texture_01_Colour_Emissive.png" id="14_ede1j"]
+[ext_resource type="Texture2D" uid="uid://codcvrar1mud" path="res://Assets/Store/Texture/PolygonShops_Texture_04_A.png" id="15_q6ev5"]
+[ext_resource type="Texture2D" uid="uid://c702ys384863y" path="res://Assets/Store/Texture/PolygonShops_Texture_02_A.png" id="16_0vhn0"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_gd0ev"]
 material = ExtResource("3_mpthu")

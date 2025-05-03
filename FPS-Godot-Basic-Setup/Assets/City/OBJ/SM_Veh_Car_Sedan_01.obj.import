@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://lm4grflr076y"
+path="res://.godot/imported/SM_Veh_Car_Sedan_01.obj-36b35d0dac39de2dab2e693cb59a115f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SM_Veh_Car_Sedan_01.obj-36b35d0dac39de2dab2e693cb59a115f.mesh"]
+
+source_file="res://Assets/City/OBJ/SM_Veh_Car_Sedan_01.obj"
+dest_files=["res://.godot/imported/SM_Veh_Car_Sedan_01.obj-36b35d0dac39de2dab2e693cb59a115f.mesh", "res://.godot/imported/SM_Veh_Car_Sedan_01.obj-36b35d0dac39de2dab2e693cb59a115f.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

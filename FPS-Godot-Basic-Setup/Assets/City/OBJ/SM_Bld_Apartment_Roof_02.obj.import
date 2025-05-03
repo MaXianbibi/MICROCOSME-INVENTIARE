@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://beq8404m1d8f8"
+path="res://.godot/imported/SM_Bld_Apartment_Roof_02.obj-b42360eb13e5eeadd5a1a6b51d50c35a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SM_Bld_Apartment_Roof_02.obj-b42360eb13e5eeadd5a1a6b51d50c35a.mesh"]
+
+source_file="res://Assets/City/OBJ/SM_Bld_Apartment_Roof_02.obj"
+dest_files=["res://.godot/imported/SM_Bld_Apartment_Roof_02.obj-b42360eb13e5eeadd5a1a6b51d50c35a.mesh", "res://.godot/imported/SM_Bld_Apartment_Roof_02.obj-b42360eb13e5eeadd5a1a6b51d50c35a.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

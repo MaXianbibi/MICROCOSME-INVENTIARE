@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://48da3atpumty"
+path="res://.godot/imported/SM_Prop_TrashBag_03.obj-453c87f890db7a0e3c16a07795ed4781.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SM_Prop_TrashBag_03.obj-453c87f890db7a0e3c16a07795ed4781.mesh"]
+
+source_file="res://Assets/City/OBJ/SM_Prop_TrashBag_03.obj"
+dest_files=["res://.godot/imported/SM_Prop_TrashBag_03.obj-453c87f890db7a0e3c16a07795ed4781.mesh", "res://.godot/imported/SM_Prop_TrashBag_03.obj-453c87f890db7a0e3c16a07795ed4781.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

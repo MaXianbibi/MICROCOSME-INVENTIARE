@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c6odl5orl8l1c"
+path="res://.godot/imported/SM_Env_Street_Divider_02.obj-951d3ed5fc8cec86916656e8c45b39eb.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SM_Env_Street_Divider_02.obj-951d3ed5fc8cec86916656e8c45b39eb.mesh"]
+
+source_file="res://Assets/City/OBJ/SM_Env_Street_Divider_02.obj"
+dest_files=["res://.godot/imported/SM_Env_Street_Divider_02.obj-951d3ed5fc8cec86916656e8c45b39eb.mesh", "res://.godot/imported/SM_Env_Street_Divider_02.obj-951d3ed5fc8cec86916656e8c45b39eb.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

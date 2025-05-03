@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dd2mqa6e4kxus"
+path="res://.godot/imported/SM_Env_Fence_01.obj-2cf2d51da508c22854e3f674179c7b4b.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SM_Env_Fence_01.obj-2cf2d51da508c22854e3f674179c7b4b.mesh"]
+
+source_file="res://Assets/City/OBJ/SM_Env_Fence_01.obj"
+dest_files=["res://.godot/imported/SM_Env_Fence_01.obj-2cf2d51da508c22854e3f674179c7b4b.mesh", "res://.godot/imported/SM_Env_Fence_01.obj-2cf2d51da508c22854e3f674179c7b4b.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

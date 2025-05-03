@@ -2,7 +2,6 @@ extends Resource
 class_name ItemData
 
 
-const default_texture = preload("res://Assets/PolygonShops_Texture_01_A.png")
 
 @export var id: String
 @export var name: String

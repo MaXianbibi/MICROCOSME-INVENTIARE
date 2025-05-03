@@ -1,6 +1,6 @@
 [gd_resource type="ArrayMesh" load_steps=4 format=4 uid="uid://bjvv4s31vf538"]
 
-[ext_resource type="Texture2D" uid="uid://dulms8sedtjee" path="res://Assets/PolygonShops_Texture_01_A.png" id="1_6hxeb"]
+[ext_resource type="Texture2D" uid="uid://dulms8sedtjee" path="res://Assets/Store/Texture/PolygonShops_Texture_01_A.png" id="1_6hxeb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lv7xt"]
 resource_name = "Shop_MAT8"

@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bpahqtwakelg"
+path="res://.godot/imported/SM_Prop_Power_Cables_01.obj-674f11441fa6699e9cb8a0e68631015a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SM_Prop_Power_Cables_01.obj-674f11441fa6699e9cb8a0e68631015a.mesh"]
+
+source_file="res://Assets/City/OBJ/SM_Prop_Power_Cables_01.obj"
+dest_files=["res://.godot/imported/SM_Prop_Power_Cables_01.obj-674f11441fa6699e9cb8a0e68631015a.mesh", "res://.godot/imported/SM_Prop_Power_Cables_01.obj-674f11441fa6699e9cb8a0e68631015a.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
