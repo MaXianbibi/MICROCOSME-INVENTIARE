@@ -15,6 +15,9 @@ func update_inventories() -> void:
 func _ready() -> void:
 	assert(parent)
 	assert(nav)
+	
+	nav.set_meta("Store", self)
+	
 	nav.child_entered_tree.connect(_on_child_enter)
 	nav.child_exiting_tree.connect(_on_child_exit)
 	update_inventories()
