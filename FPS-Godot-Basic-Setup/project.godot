@@ -89,6 +89,10 @@ shoot={
 ]
 }
 
+[navigation]
+
+3d/default_cell_size=0.1
+
 [rendering]
 
 global_illumination/voxel_gi/quality=1

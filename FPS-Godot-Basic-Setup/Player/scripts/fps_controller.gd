@@ -32,11 +32,12 @@ var in_vision_object : Interactable = null
 @onready var playerUI : PlayerUI = HudManager.player_item_hud
 @onready var interaction_ray: InteractionRay = $InteractionRay
 @onready var subMenu : SubItemMenu = HudManager.sub_menu_hud
-
 var interaction_dict : Dictionary = {}
 
 var current_index : int = 0
 var object_cache : Array = []
+
+var last_seen_object : Dictionary = {}
 
 func snap_object_rotation(obj: Node3D, direction: float) -> void:
 	var static_obj := obj as StaticBody3D
@@ -329,6 +330,7 @@ func drop_item() -> void:
 	
 func pick_static_object() -> void:
 	var result: Dictionary = interaction_ray.interact_cast(1000.0)
+	last_seen_object = result
 	if result.is_empty():
 		return
 
@@ -380,6 +382,11 @@ func can_place_object(obj: Node3D) -> bool:
 func place_static_object() -> void:
 	var world_object : StaticBody3D = object_cache[current_index]
 	if not can_place_object(world_object): return
+	
+	if last_seen_object["collider"] == null: return
+	## might crash here
+	var navigation_parent : NavigationRegion3D = last_seen_object["collider"].get_parent()
+	world_object.reparent(navigation_parent)
 	
 	inventory.remove_single_item(current_index)	
 	object_cache[current_index] = null

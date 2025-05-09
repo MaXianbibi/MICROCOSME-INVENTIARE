@@ -7,6 +7,10 @@ var items: Array = []
 var current_index : int = 0
 @onready var sub_menu_hud : SubItemMenu = HudManager.sub_menu_hud
 
+signal add_new_item(item : ItemData, index:  int)
+signal remove_item(index : int)
+signal signal_swap_item(old_index : int, new_index : int)
+
 func interact(body : Entity = null) -> void:
 	if sub_menu_hud.visible == true: return
 	
@@ -23,8 +27,6 @@ func init() -> void:
 
 func add_to_array(item : ItemData, decl_index : int = -1) -> bool:
 	var index : int = 0
-	
-	
 	
 	if decl_index != -1:
 		index = decl_index
@@ -43,6 +45,10 @@ func add_to_array(item : ItemData, decl_index : int = -1) -> bool:
 	new_item.local_index = index
 	new_item.world_object = null
 	items[index] = new_item
+	
+	## emit signal 
+	add_new_item.emit(new_item, index)
+	
 	return true
 
 func add_single_item(item_data: ItemData, index : int = -1) -> bool:
@@ -77,6 +83,7 @@ func remove_single_item(index : int) -> bool:
 		return false
 	if item.size == 0:
 		items[index] = null
+		remove_item.emit(index)
 	return true
 	
 
@@ -87,7 +94,8 @@ func swap_item(from_index: int, to_index: int) -> void:
 	items[to_index] = temp
 	
 	items[to_index].local_index = to_index
-	print("NEW LOCAL INDEX : ", items[to_index].local_index)
+	
+	signal_swap_item.emit(from_index, to_index)
 	
 func logs() -> void:
 	print("---------------------------------------------")
