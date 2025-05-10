@@ -8,9 +8,7 @@ class_name NPC
 @onready var look_at : LookAtModifier3D = $Root/Skeleton/lookat1
 @onready var sub_menu : SubItemMenu = HudManager.sub_menu_hud
 @onready var looking_for_timer: Timer = $LookingForTimer
-
 @export var target_item : ItemData = null
-
 @onready var stores_array : Array[Store] = EntityManager.stores_array
 
 const NECK = "Neck"
@@ -21,6 +19,10 @@ enum State {
 	Idle,
 	Walking,
 	Picking
+}
+
+enum EventState {
+	
 }
 
 var state : State = State.Idle
