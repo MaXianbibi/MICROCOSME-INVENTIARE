@@ -35,6 +35,7 @@ HUD=""
 PlayerUI=""
 SubMenuHud=""
 Shelf=""
+Stores=""
 
 [input]
 

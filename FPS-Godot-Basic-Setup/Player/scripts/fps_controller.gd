@@ -135,10 +135,7 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
-	
-	
 	pick_items()
-	
 	if Input.is_action_pressed("drop"):
 		drop_item()
 ## INTERACTION
@@ -344,7 +341,13 @@ func pick_static_object() -> void:
 
 	# Vérifier si l'objet peut être placé à cette position
 	var can_place: bool = can_place_object(obj)
-
+	can_place = can_place and last_seen_object["collider"] is not Entity
+	
+	if can_place:
+		## Ne peut que placer dans un store, peut etre utile plus tard pour specifier l'appartenance d'un store
+		var navigation_parent : NavigationRegion3D = last_seen_object["collider"].get_parent()
+		can_place = can_place and navigation_parent.has_meta("Store")
+		
 	# Appliquer le retour visuel
 	if obj.has_meta("objectData"):
 		var object_data: objectData = obj.get_meta("objectData") as objectData
@@ -385,7 +388,7 @@ func place_static_object() -> void:
 	
 	if last_seen_object["collider"] == null: return
 	## might crash here
-	var navigation_parent : NavigationRegion3D = last_seen_object["collider"].get_parent()
+	var navigation_parent : NavigationRegion3D = last_seen_object["collider"].get_parent()	
 	world_object.reparent(navigation_parent)
 	
 	inventory.remove_single_item(current_index)	

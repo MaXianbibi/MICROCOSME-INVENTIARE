@@ -17,9 +17,6 @@ func interact(body : Entity = null) -> void:
 	if body is Player:
 		sub_menu_hud.init_sub_menu(self)
 	
-		
-
-
 func init() -> void:
 	interaction_name = "Access to "
 	_name = parent.name
@@ -45,10 +42,8 @@ func add_to_array(item : ItemData, decl_index : int = -1) -> bool:
 	new_item.local_index = index
 	new_item.world_object = null
 	items[index] = new_item
-	
 	## emit signal 
 	add_new_item.emit(new_item, index)
-	
 	return true
 
 func add_single_item(item_data: ItemData, index : int = -1) -> bool:
@@ -58,9 +53,6 @@ func add_single_item(item_data: ItemData, index : int = -1) -> bool:
 		if item == null: return false	
 		return item.id == item_data.id and item.size < item.max_stack_size
 	)
-	
-	
-	
 	if item_index == -1:
 		return add_to_array(item_data, index)	
 	var item : ItemData = items[item_index]
@@ -68,14 +60,12 @@ func add_single_item(item_data: ItemData, index : int = -1) -> bool:
 		return add_to_array(item_data)
 	return true
 	
-	
 func add_item(item_data: ItemData) -> int:
 	for n in item_data.size:
 		if add_single_item(item_data) == false:
 			return item_data.size - n
 	return 0
 	
-
 func remove_single_item(index : int) -> bool:
 	var item : ItemData = items[index]
 	if item == null: return false
@@ -85,16 +75,12 @@ func remove_single_item(index : int) -> bool:
 		items[index] = null
 		remove_item.emit(index)
 	return true
-	
 
-	
 func swap_item(from_index: int, to_index: int) -> void:
 	var temp : ItemData = items[from_index]
 	items[from_index] = items[to_index]
 	items[to_index] = temp
-	
 	items[to_index].local_index = to_index
-	
 	signal_swap_item.emit(from_index, to_index)
 	
 func logs() -> void:
@@ -103,3 +89,12 @@ func logs() -> void:
 		if item:
 			print("NAME : ", item.name, " | SIZE : ", item.size, " | LOCAL INDEX : ", item.local_index)
 	print("---------------------------------------------")
+	
+func have_item(item: ItemData) -> bool:
+	return items.find_custom(func(list_item): 
+		return list_item != null and list_item is ItemData and item.id == list_item.id
+	) >= 0
+
+
+	
+		

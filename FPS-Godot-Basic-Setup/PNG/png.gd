@@ -6,14 +6,16 @@ class_name NPC
 @onready var animation_tree: AnimationTree = $AnimationTree
 @export var target : Node3D = null
 @onready var look_at : LookAtModifier3D = $Root/Skeleton/lookat1
-
 @onready var sub_menu : SubItemMenu = HudManager.sub_menu_hud
+@onready var looking_for_timer: Timer = $LookingForTimer
+
+@export var target_item : ItemData = null
+
+@onready var stores_array : Array[Store] = EntityManager.stores_array
 
 const NECK = "Neck"
 var task_finish : bool = false
-
 var interactable : Interactable = null
-
 
 enum State {
 	Idle,
@@ -32,22 +34,16 @@ func _ready() -> void:
 		navigation_agent_3d.target_position = target.global_position
 	play_animation_state()
 
-
 func new_target(new_target : Node3D) -> void:
 	target = new_target
 	state = State.Walking
 	look_at.target_node = target.get_path()
 	navigation_agent_3d.target_position = target.global_position
-	
 	play_animation_state()
 	
-	
-
 func play_animation_state() -> void:
-
 	if state == last_state: return
 	last_state = state
-	
 	match  state:
 		State.Idle:
 			animation_tree.set("parameters/Transition/transition_request", "Idle")
@@ -62,45 +58,37 @@ func move_toward_target(delta) -> void:
 	if direction.length() > 0.01:
 		var target_rotation := atan2(direction.x, direction.z)
 		rotation.y = lerp_angle(rotation.y, target_rotation, delta * 5.0)
-
 	# Applique le mouvement seulement si utile
 	velocity = direction * 1.0
 	move_and_slide()
 
 func _physics_process(delta: float) -> void:
+	
 	if target == null: return
 	if not task_finish: move_toward_target(delta)
 
-
 func _on_area_3d_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	if body == target:
-		task_finish = true
-		interactable = body.get_meta("interactable")
-		if interactable is Pickable:
-			take_an_item(interactable)
-			await get_tree().create_timer(2).timeout
-			drop_first_item()
-			
-			task_finish = false
-			new_target(get_tree().get_first_node_in_group("Shelf"))
-			
-			return
-			
-		if interactable is Inventory:
-			var items : ItemData = inventory.items[0]
-			inventory.remove_single_item(0)
-			interactable.add_single_item(items)
-			
-			if sub_menu.visible:
-				sub_menu._update()
-			
-			
-			state = State.Picking
-			play_animation_state()
-			
-			
-			
-			interactable = null
+	return
+	#if body == target:
+		#task_finish = true
+		#interactable = body.get_meta("interactable")
+		#if interactable is Pickable:
+			#take_an_item(interactable)
+			#await get_tree().create_timer(2).timeout
+			#drop_first_item()
+			#task_finish = false
+			#new_target(get_tree().get_first_node_in_group("Shelf"))
+			#return
+			#
+		#if interactable is Inventory:
+			#var items : ItemData = inventory.items[0]
+			#inventory.remove_single_item(0)
+			#interactable.add_single_item(items)
+			#if sub_menu.visible:
+				#sub_menu._update()
+			#state = State.Picking
+			#play_animation_state()
+			#interactable = null
 			
 			
 func drop_first_item() -> void:
@@ -126,3 +114,13 @@ func take_an_item(interactable : Pickable) -> void:
 	interactable.interact(self)
 	interactable = null
 		
+
+
+func _on_looking_for_timer_timeout() -> void:
+	for store in stores_array:
+		var shelf : PhysicsBody3D = store.store_have_item(target_item)
+		if shelf:
+			new_target(shelf)
+			return
+			
+	print("no item found :(")

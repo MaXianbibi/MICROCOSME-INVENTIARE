@@ -2169,6 +2169,6 @@ skeleton = NodePath("")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="NavigationRegion3D/SM_Prop_Cafe_Counter_Outdoor_02"]
 shape = SubResource("ConcavePolygonShape3D_v4tg0")
 
-[node name="StoreComp" type="Node" parent="." node_paths=PackedStringArray("nav")]
+[node name="StoreComp" type="Node" parent="." node_paths=PackedStringArray("nav") groups=["Stores"]]
 script = ExtResource("15_1sea7")
 nav = NodePath("../NavigationRegion3D")
