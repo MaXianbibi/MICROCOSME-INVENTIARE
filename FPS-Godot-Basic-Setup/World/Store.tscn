@@ -1,4 +1,4 @@
-[gd_scene load_steps=171 format=4 uid="uid://cxmec6hyugdc1"]
+[gd_scene load_steps=172 format=4 uid="uid://cxmec6hyugdc1"]
 
 [ext_resource type="Texture2D" uid="uid://di6xmg1lqsvc1" path="res://Assets/Store/Texture/PolygonShops_Building_Wood_02.png" id="1_a35a6"]
 [ext_resource type="Texture2D" uid="uid://dpfsfv3vnwl14" path="res://Assets/Store/Texture/PolygonStreetRacer_Building_Texture_02.png" id="2_a85pj"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://d1ctnkfa0qoy" path="res://Object/Door/SingleDoor.tscn" id="11_qdn3i"]
 [ext_resource type="PackedScene" uid="uid://ce7vb0e1icrsn" path="res://Object/Shelf/Shelf.tscn" id="12_dyjoe"]
 [ext_resource type="Script" uid="uid://ihjbcp56td1n" path="res://World/Store.gd" id="15_1sea7"]
+[ext_resource type="Script" uid="uid://cpi6fd3maqiir" path="res://World/working_station.gd" id="15_05eb5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_67vhc"]
 resource_name = "lambert26"
@@ -2168,6 +2169,9 @@ skeleton = NodePath("")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="NavigationRegion3D/SM_Prop_Cafe_Counter_Outdoor_02"]
 shape = SubResource("ConcavePolygonShape3D_v4tg0")
+
+[node name="WorkingStation" type="Node" parent="NavigationRegion3D/SM_Prop_Cafe_Counter_Outdoor_02"]
+script = ExtResource("15_05eb5")
 
 [node name="StoreComp" type="Node" parent="." node_paths=PackedStringArray("nav") groups=["Stores"]]
 script = ExtResource("15_1sea7")

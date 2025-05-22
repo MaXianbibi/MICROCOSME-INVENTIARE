@@ -56,11 +56,6 @@ func snap_object_rotation(obj: Node3D, direction: float) -> void:
 	rot.y = snapped_angle
 	static_obj.rotation = rot
 
-
-
-
-
-
 func _unhandled_input(event: InputEvent) -> void:
 	_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
 	if _mouse_input:
@@ -118,11 +113,11 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-
-	# Handle Jump.
+	
+	# Handle Jump.	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-
+		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")	
@@ -136,11 +131,10 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
 	pick_items()
-	if Input.is_action_pressed("drop"):
+	
+	if Input.is_action_just_pressed("drop"):
 		drop_item()
 ## INTERACTION
-
-
 	
 func set_interaction(intraction_body: Interactable) -> void:
 	if intraction_body:

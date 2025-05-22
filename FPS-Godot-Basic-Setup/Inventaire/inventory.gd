@@ -95,6 +95,16 @@ func have_item(item: ItemData) -> bool:
 		return list_item != null and list_item is ItemData and item.id == list_item.id
 	) >= 0
 
+func find_index_from_id(item : ItemData) -> int:
+	return items.find_custom(func(list_item): 
+		return list_item != null and list_item is ItemData and item.id == list_item.id
+	)
+
+func remove_item_by_id(item: ItemData) -> bool:
+	var index : int = find_index_from_id(item)
+	if index == -1: return false
+	remove_single_item(index)
+	return true
 
 	
 		

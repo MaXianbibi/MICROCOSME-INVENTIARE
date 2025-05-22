@@ -13,45 +13,49 @@ class_name NPC
 
 const NECK = "Neck"
 var task_finish : bool = false
-var interactable : Interactable = null
 
-enum State {
+enum AnimationState {
 	Idle,
 	Walking,
 	Picking
 }
 
 enum EventState {
-	
+	IDLE,
+	PICKING,
+	BUYING,
+	LEAVING
 }
 
-var state : State = State.Idle
-var last_state : State = State.Picking
+var animation_state : AnimationState = AnimationState.Idle
+var eventState : EventState = EventState.IDLE
+var last_animation_state : AnimationState = AnimationState.Picking
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if target:
-		state = State.Walking
+		animation_state = AnimationState.Walking
 		look_at.target_node = target.get_path()
 		navigation_agent_3d.target_position = target.global_position
 	play_animation_state()
+	
 
 func new_target(new_target : Node3D) -> void:
 	target = new_target
-	state = State.Walking
+	animation_state = AnimationState.Walking
 	look_at.target_node = target.get_path()
 	navigation_agent_3d.target_position = target.global_position
 	play_animation_state()
 	
 func play_animation_state() -> void:
-	if state == last_state: return
-	last_state = state
-	match  state:
-		State.Idle:
+	if animation_state == last_animation_state: return
+	last_animation_state = animation_state
+	match  animation_state:
+		AnimationState.Idle:
 			animation_tree.set("parameters/Transition/transition_request", "Idle")
-		State.Walking:
+		AnimationState.Walking:
 			animation_tree.set("parameters/Transition/transition_request", "Walk")
-		State.Picking:
+		AnimationState.Picking:
 			animation_tree.set("parameters/Transition/transition_request", "Pick")
 			
 func move_toward_target(delta) -> void:
@@ -70,8 +74,8 @@ func _physics_process(delta: float) -> void:
 	if not task_finish: move_toward_target(delta)
 
 func _on_area_3d_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	return
-	#if body == target:
+	if body == target:
+		if eventState
 		#task_finish = true
 		#interactable = body.get_meta("interactable")
 		#if interactable is Pickable:
@@ -88,7 +92,7 @@ func _on_area_3d_body_shape_entered(body_rid: RID, body: Node3D, body_shape_inde
 			#interactable.add_single_item(items)
 			#if sub_menu.visible:
 				#sub_menu._update()
-			#state = State.Picking
+			#animation_state = AnimationState.Picking
 			#play_animation_state()
 			#interactable = null
 			
@@ -110,7 +114,7 @@ func drop_first_item() -> void:
 func take_an_item(interactable : Pickable) -> void:
 	if interactable == null: return
 		
-	state = State.Picking
+	animation_state = AnimationState.Picking
 	play_animation_state()
 	await get_tree().create_timer(0.7).timeout
 	interactable.interact(self)
@@ -124,5 +128,15 @@ func _on_looking_for_timer_timeout() -> void:
 		if shelf:
 			new_target(shelf)
 			return
-			
 	print("no item found :(")
+
+func take_from_inventory(body : PhysicsBody3D) -> void:
+	var interactable = body.get_meta("interactable")
+	if interactable is not Inventory: return
+	
+	## Check, if its there, remove items and return true, else false
+	if interactable.remove_item_by_id(target_item) == false: return
+	
+	inventory.add_item(target_item)
+		
+	
