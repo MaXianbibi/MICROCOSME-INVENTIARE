@@ -23,7 +23,6 @@ func init_sub_menu(inventory : Inventory) -> void:
 func _update() -> void:
 	if sub_inventory == null : return
 	var menu_size : int = sub_inventory.max_size
-	
 	var item_ui_children : Array = get_children()
 	
 	for n in menu_size:

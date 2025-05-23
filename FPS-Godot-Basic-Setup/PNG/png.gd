@@ -11,8 +11,12 @@ class_name NPC
 @export var target_item : ItemData = null
 @onready var stores_array : Array[Store] = EntityManager.stores_array
 
+@onready var player : Player = EntityManager.player
+
 const NECK = "Neck"
 var task_finish : bool = false
+
+@onready var look_at_modifier_3d: LookAtModifier3D = $Label3D/LookAtModifier3D
 
 enum AnimationState {
 	Idle,
@@ -20,16 +24,30 @@ enum AnimationState {
 	Picking
 }
 
+@onready var label_3d: Label3D = $Label3D
+const EVENT_STATE_TEXTS = ["Idle", "Looking", "Walking", "Picking", "Buying", "Leaving"]
+
+
 enum EventState {
 	IDLE,
+	LOOKING,
+	WALKING_TO,
 	PICKING,
 	BUYING,
 	LEAVING
 }
 
+var eventState : EventState = EventState.LOOKING:
+	set(value):
+		eventState = value
+		_update_label()
+
 var animation_state : AnimationState = AnimationState.Idle
-var eventState : EventState = EventState.IDLE
 var last_animation_state : AnimationState = AnimationState.Picking
+
+func _update_label():
+	label_3d.text = EVENT_STATE_TEXTS[eventState]
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -38,11 +56,14 @@ func _ready() -> void:
 		look_at.target_node = target.get_path()
 		navigation_agent_3d.target_position = target.global_position
 	play_animation_state()
+	_update_label()
+	look_at_modifier_3d.target_node = player.get_path()
 	
 
 func new_target(new_target : Node3D) -> void:
 	target = new_target
 	animation_state = AnimationState.Walking
+	eventState = EventState.WALKING_TO
 	look_at.target_node = target.get_path()
 	navigation_agent_3d.target_position = target.global_position
 	play_animation_state()
@@ -69,13 +90,30 @@ func move_toward_target(delta) -> void:
 	move_and_slide()
 
 func _physics_process(delta: float) -> void:
-	
 	if target == null: return
-	if not task_finish: move_toward_target(delta)
+	
+	match eventState:
+		EventState.IDLE:
+			return
+		EventState.LOOKING:
+			return
+		EventState.WALKING_TO:
+			move_toward_target(delta)
+		EventState.PICKING:
+			return
+		EventState.BUYING:
+			return
+		EventState.LEAVING:
+			return
+			
 
 func _on_area_3d_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
 	if body == target:
-		if eventState
+		print("yooo")
+		if eventState == EventState.WALKING_TO:
+			eventState = EventState.PICKING
+			take_from_inventory(body)
+			
 		#task_finish = true
 		#interactable = body.get_meta("interactable")
 		#if interactable is Pickable:
@@ -111,23 +149,26 @@ func drop_first_item() -> void:
 	pickable.drop(self)
 
 	
-func take_an_item(interactable : Pickable) -> void:
+func take_an_item(body : PhysicsBody3D) -> void:
+	var interactable = body.get_meta("interactable")
 	if interactable == null: return
+	if interactable is not Pickable: return
+	
 		
 	animation_state = AnimationState.Picking
 	play_animation_state()
 	await get_tree().create_timer(0.7).timeout
-	interactable.interact(self)
-	interactable = null
-		
-
+	interactable.interact(self)		
 
 func _on_looking_for_timer_timeout() -> void:
+	if eventState != EventState.LOOKING: return
+	
 	for store in stores_array:
 		var shelf : PhysicsBody3D = store.store_have_item(target_item)
 		if shelf:
 			new_target(shelf)
 			return
+			
 	print("no item found :(")
 
 func take_from_inventory(body : PhysicsBody3D) -> void:
@@ -135,8 +176,15 @@ func take_from_inventory(body : PhysicsBody3D) -> void:
 	if interactable is not Inventory: return
 	
 	## Check, if its there, remove items and return true, else false
-	if interactable.remove_item_by_id(target_item) == false: return
+	animation_state = AnimationState.Picking
+	play_animation_state()
+	await get_tree().create_timer(0.7).timeout
 	
+	
+	if interactable.remove_item_by_id(target_item) == false: return
 	inventory.add_item(target_item)
+	
+	
+	eventState = EventState.BUYING
 		
 	

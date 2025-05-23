@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://d07bc1v0ruxp8"]
+
+[ext_resource type="Script" uid="uid://ct84g1tv8f1qs" path="res://Inventaire/ItemData.gd" id="1_le0hk"]
+[ext_resource type="Texture2D" uid="uid://bqmwr75y45gkp" path="res://Object/WorkingStation/generated.png" id="1_pcxml"]
+
+[resource]
+script = ExtResource("1_le0hk")
+id = "WorkingStation"
+name = "Working Station"
+size = 1
+description = ""
+icon = ExtResource("1_pcxml")
+max_stack_size = 1
+weight = 1.0
+item_type = "generic"
+tradable = true
+item_scene = "uid://00qo3xv5q87"
+custom_data = {}
+local_index = 0
+physicBody = 0
+metadata/_custom_type_script = "uid://ct84g1tv8f1qs"

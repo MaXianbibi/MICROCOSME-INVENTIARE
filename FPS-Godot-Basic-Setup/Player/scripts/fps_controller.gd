@@ -75,6 +75,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("drop"):
 		if object_cache[current_index] is StaticBody3D:
 			snap_object_rotation(object_cache[current_index], 1)
+			
+	if event.is_action_pressed("drop") and object_cache[current_index] is RigidBody3D: drop_rigid()
+	
 		
 func can_object_move(world_object : Node3D) -> bool:
 	if world_object is not StaticBody3D: return false
@@ -132,7 +135,7 @@ func _physics_process(delta):
 	move_and_slide()
 	pick_items()
 	
-	if Input.is_action_just_pressed("drop"):
+	if Input.is_action_pressed("drop"):
 		drop_item()
 ## INTERACTION
 	
@@ -311,12 +314,10 @@ func drop_rigid() -> void:
 func apply_snapped_rotation(obj: StaticBody3D, amount: float) -> void:
 	obj.rotate_y(amount)
 
-
-	
 func drop_item() -> void:
 	if object_cache[current_index] == null: return
-	if object_cache[current_index] is RigidBody3D: drop_rigid()
-	elif object_cache[current_index] is StaticBody3D: apply_snapped_rotation(object_cache[current_index], .0625)
+	#if object_cache[current_index] is RigidBody3D: drop_rigid()
+	if object_cache[current_index] is StaticBody3D: apply_snapped_rotation(object_cache[current_index], .0625)
 	
 	
 func pick_static_object() -> void:
@@ -334,14 +335,20 @@ func pick_static_object() -> void:
 	obj.global_position = snapped_pos
 
 	# Vérifier si l'objet peut être placé à cette position
-	var can_place: bool = can_place_object(obj)
-	can_place = can_place and last_seen_object["collider"] is not Entity
 	
-	if can_place:
-		## Ne peut que placer dans un store, peut etre utile plus tard pour specifier l'appartenance d'un store
+	var can_place : bool = false
+	
+	if last_seen_object["collider"].get_parent() is NavigationRegion3D:
 		var navigation_parent : NavigationRegion3D = last_seen_object["collider"].get_parent()
-		can_place = can_place and navigation_parent.has_meta("Store")
-		
+		can_place = navigation_parent.has_meta("Store")
+	else:
+		can_place = false
+			
+	if can_place:
+		can_place = can_place_object(obj)
+		can_place = can_place and last_seen_object["collider"] is not Entity
+	
+		## Ne peut que placer dans un store, peut etre utile plus tard pour specifier l'appartenance d'un store
 	# Appliquer le retour visuel
 	if obj.has_meta("objectData"):
 		var object_data: objectData = obj.get_meta("objectData") as objectData

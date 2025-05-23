@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bk87ymy32f7mu"]
 
 [ext_resource type="Script" uid="uid://ct3kctc32ilhu" path="res://addons/scene_texture/SceneRender.gd" id="1_i535u"]
-[ext_resource type="PackedScene" uid="uid://ce7vb0e1icrsn" path="res://Object/Shelf/Shelf.tscn" id="2_1vu1y"]
+[ext_resource type="PackedScene" uid="uid://00qo3xv5q87" path="res://Object/WorkingStation/WorkingStation.tscn" id="2_1vu1y"]
 
 [node name="SceneRender" type="SubViewport"]
 transparent_bg = true
@@ -16,7 +16,7 @@ scene = ExtResource("2_1vu1y")
 scene_process_mode = 0
 scene_position = Vector3(0.225, -0.66, -0.045)
 scene_rotation = Vector3(-0.0837758, 0.165806, 0)
-camera_distance = 6.275
+camera_distance = 3.97
 camera_position = Vector3(0, 0.17, 0)
 
 [node name="Node3D" type="Node3D" parent="."]
@@ -33,7 +33,7 @@ light_angular_distance = 6.55
 transform = Transform3D(0.906306, 0.211308, -0.365998, 0, 0.866022, 0.499999, 0.422617, -0.453152, 0.784885, 0, 0.17, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Node3D/CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.36557e-08, -6.77537e-08, 6.275)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.36557e-08, -6.77537e-08, 3.97)
 fov = 30.0
 far = 500.0
 

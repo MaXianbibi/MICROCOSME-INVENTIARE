@@ -37,6 +37,10 @@ SubMenuHud=""
 Shelf=""
 Stores=""
 
+[gui]
+
+theme/default_font_generate_mipmaps=true
+
 [input]
 
 move_forward={
