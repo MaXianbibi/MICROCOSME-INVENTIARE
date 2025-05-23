@@ -292,7 +292,6 @@ func pick_rigid_object() -> void:
 	world_object.global_transform.basis = Basis(final_rot)
 	world_object.scale = Vector3.ONE * scale_factor
 	
-
 func pick_items() -> void:
 	if inventory.items[current_index] == null:
 		return	
@@ -301,7 +300,6 @@ func pick_items() -> void:
 	if object_cache[current_index] is  RigidBody3D: pick_rigid_object()
 	elif object_cache[current_index] is StaticBody3D: pick_static_object()
 	
-
 func drop_rigid() -> void:
 	var pickable : Pickable = object_cache[current_index].get_meta("interactable")
 	if pickable == null: return	
@@ -310,7 +308,6 @@ func drop_rigid() -> void:
 	updateUI()
 	pickable.drop(CAMERA_CONTROLLER)
 	
-
 func apply_snapped_rotation(obj: StaticBody3D, amount: float) -> void:
 	obj.rotate_y(amount)
 
@@ -318,7 +315,6 @@ func drop_item() -> void:
 	if object_cache[current_index] == null: return
 	#if object_cache[current_index] is RigidBody3D: drop_rigid()
 	if object_cache[current_index] is StaticBody3D: apply_snapped_rotation(object_cache[current_index], .0625)
-	
 	
 func pick_static_object() -> void:
 	var result: Dictionary = interaction_ray.interact_cast(1000.0)
