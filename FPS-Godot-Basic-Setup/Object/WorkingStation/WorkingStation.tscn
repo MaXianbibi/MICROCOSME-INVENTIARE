@@ -131,3 +131,6 @@ item_data = ExtResource("7_n2mww")
 script = ExtResource("4_my672")
 
 [node name="Pickable" parent="." instance=ExtResource("5_my672")]
+
+[node name="NextClient" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)

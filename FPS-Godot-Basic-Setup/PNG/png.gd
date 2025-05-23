@@ -8,9 +8,13 @@ class_name NPC
 @onready var look_at : LookAtModifier3D = $Root/Skeleton/lookat1
 @onready var sub_menu : SubItemMenu = HudManager.sub_menu_hud
 @onready var looking_for_timer: Timer = $LookingForTimer
-@export var target_item : ItemData = null
-@onready var stores_array : Array[Store] = EntityManager.stores_array
 
+
+@export var target_items_list : Array[ItemData] = []
+var target_index : int = 0
+
+
+@onready var stores_array : Array[Store] = EntityManager.stores_array
 @onready var player : Player = EntityManager.player
 
 const NECK = "Neck"
@@ -45,9 +49,10 @@ var eventState : EventState = EventState.LOOKING:
 var animation_state : AnimationState = AnimationState.Idle
 var last_animation_state : AnimationState = AnimationState.Picking
 
+var current_store : Store = null
+
 func _update_label():
 	label_3d.text = EVENT_STATE_TEXTS[eventState]
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -93,10 +98,15 @@ func _physics_process(delta: float) -> void:
 	if target == null: return
 	
 	match eventState:
+		
+		## DOING NOTHING / STALL IN APPARTEMENT
 		EventState.IDLE:
 			return
+			
+		## REGULATE BY TIMER
 		EventState.LOOKING:
 			return
+			
 		EventState.WALKING_TO:
 			move_toward_target(delta)
 		EventState.PICKING:
@@ -163,8 +173,11 @@ func take_an_item(body : PhysicsBody3D) -> void:
 func _on_looking_for_timer_timeout() -> void:
 	if eventState != EventState.LOOKING: return
 	
+	if target_items_list.size() == target_index:
+		return
+		
 	for store in stores_array:
-		var shelf : PhysicsBody3D = store.store_have_item(target_item)
+		var shelf : PhysicsBody3D = store.store_have_item(target_items_list[target_index])
 		if shelf:
 			new_target(shelf)
 			return
@@ -179,12 +192,12 @@ func take_from_inventory(body : PhysicsBody3D) -> void:
 	animation_state = AnimationState.Picking
 	play_animation_state()
 	await get_tree().create_timer(0.7).timeout
+	if interactable.remove_item_by_id(target_items_list[target_index]) == false: return
 	
+	inventory.add_item(target_items_list[target_index])
+	eventState = EventState.LOOKING
+	target_index += 1
 	
-	if interactable.remove_item_by_id(target_item) == false: return
-	inventory.add_item(target_item)
-	
-	
-	eventState = EventState.BUYING
-		
-	
+
+func look_for_nearest_counter() -> void:
+	return

@@ -1,10 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://b1yleqbb8tc7x"]
+[gd_scene load_steps=21 format=3 uid="uid://b1yleqbb8tc7x"]
 
 [ext_resource type="Script" uid="uid://dl7mgwg862sm2" path="res://Sky/main.gd" id="1_up81d"]
 [ext_resource type="PackedScene" uid="uid://c7xlv1gunoh8o" path="res://PNG/PNG.tscn" id="2_efyiq"]
 [ext_resource type="Environment" uid="uid://4cm0g3s1keb5" path="res://Object/Door/sky_env.tres" id="2_jf6eg"]
 [ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://materials/grid.tres" id="3_mpthu"]
-[ext_resource type="Resource" uid="uid://b3dew8cg1ftj7" path="res://Object/Apple/apple_data.tres" id="4_jf6eg"]
 [ext_resource type="Texture2D" uid="uid://ivvpsi314b34" path="res://textures/grid.jpg" id="4_v303c"]
 [ext_resource type="PackedScene" uid="uid://clarc3kmoicgs" path="res://Object/BallTest/ball.tscn" id="5_skit2"]
 [ext_resource type="PackedScene" uid="uid://bcr6ws5yna40e" path="res://HUD/HUD.tscn" id="6_qnpsc"]
@@ -164,7 +163,6 @@ directional_shadow_fade_start = 0.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.16823, 0.916469, 3.32069)
 collision_layer = 2
 collision_mask = 2
-target_item = ExtResource("4_jf6eg")
 
 [node name="Ball" parent="." instance=ExtResource("5_skit2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.05447, 2.24392, 5.26575)

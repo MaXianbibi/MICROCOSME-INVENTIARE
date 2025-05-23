@@ -242,15 +242,10 @@ func process_static() -> void:
 	var scene : PackedScene = item.get_scene()
 	object_cache[current_index] = scene.instantiate()
 	get_tree().current_scene.add_child(object_cache[current_index])
-	
-	
 	object_cache[current_index].global_rotation = global_rotation
-	
 	snap_object_rotation(object_cache[current_index], 0)
-	
 	var pickable : Pickable = object_cache[current_index].get_node("Pickable")
 	assert(pickable)
-	
 	pickable._disable_static_physics()	
 	pickable.set_select_shader()
 	
@@ -263,7 +258,6 @@ func _process(_delta: float) -> void:
 		
 	if inventory.items[current_index].physicBody == ItemData.PhysicBody.Static:
 		process_static()
-
 
 func pick_rigid_object() -> void:
 	var world_object: PhysicsBody3D = object_cache[current_index]
@@ -344,15 +338,13 @@ func pick_static_object() -> void:
 		can_place = can_place_object(obj)
 		can_place = can_place and last_seen_object["collider"] is not Entity
 	
-		## Ne peut que placer dans un store, peut etre utile plus tard pour specifier l'appartenance d'un store
+	## Ne peut que placer dans un store, peut etre utile plus tard pour specifier l'appartenance d'un store
 	# Appliquer le retour visuel
 	if obj.has_meta("objectData"):
 		var object_data: objectData = obj.get_meta("objectData") as objectData
 		if object_data:
 			object_data.change_select_color(can_place)
-
-	
-	
+			
 ## pas trop didee a savoir comment sa marche, peut probablement causer probleme dans le futur.
 func can_place_object(obj: Node3D) -> bool:
 	# Récupère la première CollisionShape3D trouvée dans l'objet
@@ -375,9 +367,7 @@ func can_place_object(obj: Node3D) -> bool:
 		var collider: Node = result.get("collider") as Node
 		if collider != null and not collider.is_in_group("no_blocking"):
 			return false
-
 	return true
-
 
 func place_static_object() -> void:
 	var world_object : StaticBody3D = object_cache[current_index]
