@@ -132,6 +132,6 @@ script = ExtResource("4_my672")
 next_client = NodePath("../NextClient")
 
 [node name="NextClient" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35986, -0.580021)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.273104, 1.57114, -0.705981)
 
 [node name="Pickable" parent="." instance=ExtResource("5_my672")]

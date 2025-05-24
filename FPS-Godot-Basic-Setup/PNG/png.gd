@@ -14,10 +14,10 @@ var target_index : int = 0
 
 @onready var stores_array : Array[Store] = EntityManager.stores_array
 @onready var player : Player = EntityManager.player
-
 const NECK = "Neck"
-
 @onready var look_at_modifier_3d: LookAtModifier3D = $Label3D/LookAtModifier3D
+
+var is_in_store : bool = false
 
 enum AnimationState {
 	Idle,
@@ -66,7 +66,6 @@ func _ready() -> void:
 func new_target(new_target : Node3D) -> void:
 	target = new_target
 	animation_state = AnimationState.Walking
-	eventState = EventState.WALKING_TO
 	look_at.target_node = target.get_path()
 	navigation_agent_3d.target_position = target.global_position
 	play_animation_state()
@@ -92,9 +91,7 @@ func move_toward_target(delta) -> void:
 	velocity = direction * 1.0
 	move_and_slide()
 
-func _physics_process(delta: float) -> void:
-	if target == null: return
-	
+func _physics_process(delta: float) -> void:	
 	match eventState:
 		## DOING NOTHING / STALL IN APPARTEMENT
 		EventState.IDLE:
@@ -107,15 +104,30 @@ func _physics_process(delta: float) -> void:
 		EventState.PICKING:
 			return
 		EventState.BUYING:				
+			if target == null:
+				look_for_nearest_counter()
 			move_toward_target(delta)
 		EventState.LEAVING:
-			return
+			
+			move_toward_target(delta)
 			
 func _on_area_3d_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	if body == target:
+	
+	if body.has_meta("interactable"):
+		var door : Interactable = body.get_meta("interactable")
+		if door is OpenDoor:
+			if !is_in_store or eventState == EventState.LEAVING:
+				door.interact(self)
+				is_in_store = !is_in_store
+				
+				print(is_in_store)
+			
+	if body == target:		
 		if eventState == EventState.WALKING_TO:
 			eventState = EventState.PICKING
 			take_from_inventory(body)
+		
+		
 			
 func drop_first_item() -> void:
 	var item : ItemData = inventory.items[0]
@@ -149,6 +161,7 @@ func _on_looking_for_timer_timeout() -> void:
 		if shelf:
 			current_store = store
 			new_target(shelf)
+			eventState = EventState.WALKING_TO
 			return
 			
 
@@ -167,7 +180,7 @@ func take_from_inventory(body : PhysicsBody3D) -> void:
 	
 	if target_index < target_items_list.size(): eventState = EventState.LOOKING
 	else:
-		look_for_nearest_counter()
+		target = null
 		eventState = EventState.BUYING
 	
 func look_for_nearest_counter() -> void:
@@ -176,13 +189,27 @@ func look_for_nearest_counter() -> void:
 	
 	if workstations_list.is_empty():
 		return
-		
 	var nearest_workstation : Node3D = null
 	
 	if workstations_list.size() == 1:
 		nearest_workstation = workstations_list[0].get_next_client_spot()
 	else:
 		assert(false)
-		
-	print(nearest_workstation.global_position)
 	new_target(nearest_workstation)
+
+
+func _on_navigation_agent_3d_navigation_finished() -> void:
+	if eventState == EventState.BUYING:
+		buying()
+		
+func buying() -> void:
+	look_at.target_node = player.CAMERA_CONTROLLER.get_path()
+	animation_state = AnimationState.Picking
+	play_animation_state()
+	await get_tree().create_timer(0.7).timeout
+	target = null
+	eventState = EventState.LEAVING
+	navigation_agent_3d.target_position = Vector3(0, 0, 0)
+	look_at.active = false
+	animation_state = AnimationState.Walking
+	play_animation_state()
