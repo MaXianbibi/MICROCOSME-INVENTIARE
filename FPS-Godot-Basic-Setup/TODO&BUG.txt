@@ -1,0 +1,6 @@
+BUG VISUEL :
+	- Lorsque tu bouge un object, et que tu prend un autre object, le premier object reste rouge, meme si la place c'est liberer.
+	- la texture emission s'enleve lorsque je bouge puis je remet, faut probablement enregistrer le materiel somewhere.
+
+OPTIMISATION : 
+	- AJOUTER UN CACHE AU STORE, POUR NE PAS AVOIR A FILTER A CHAQUE FOIS.

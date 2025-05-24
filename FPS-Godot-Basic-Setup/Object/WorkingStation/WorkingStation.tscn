@@ -127,10 +127,11 @@ shape = SubResource("ConvexPolygonShape3D_my672")
 [node name="ObjectData" parent="." instance=ExtResource("6_7p80g")]
 item_data = ExtResource("7_n2mww")
 
-[node name="WorkingStation" type="Node" parent="."]
+[node name="WorkingStation" type="Node" parent="." node_paths=PackedStringArray("next_client")]
 script = ExtResource("4_my672")
-
-[node name="Pickable" parent="." instance=ExtResource("5_my672")]
+next_client = NodePath("../NextClient")
 
 [node name="NextClient" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35986, -0.580021)
+
+[node name="Pickable" parent="." instance=ExtResource("5_my672")]

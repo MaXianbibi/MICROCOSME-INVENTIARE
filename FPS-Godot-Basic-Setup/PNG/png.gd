@@ -9,16 +9,13 @@ class_name NPC
 @onready var sub_menu : SubItemMenu = HudManager.sub_menu_hud
 @onready var looking_for_timer: Timer = $LookingForTimer
 
-
 @export var target_items_list : Array[ItemData] = []
 var target_index : int = 0
-
 
 @onready var stores_array : Array[Store] = EntityManager.stores_array
 @onready var player : Player = EntityManager.player
 
 const NECK = "Neck"
-var task_finish : bool = false
 
 @onready var look_at_modifier_3d: LookAtModifier3D = $Label3D/LookAtModifier3D
 
@@ -31,7 +28,6 @@ enum AnimationState {
 @onready var label_3d: Label3D = $Label3D
 const EVENT_STATE_TEXTS = ["Idle", "Looking", "Walking", "Picking", "Buying", "Leaving"]
 
-
 enum EventState {
 	IDLE,
 	LOOKING,
@@ -40,6 +36,7 @@ enum EventState {
 	BUYING,
 	LEAVING
 }
+
 
 var eventState : EventState = EventState.LOOKING:
 	set(value):
@@ -50,6 +47,7 @@ var animation_state : AnimationState = AnimationState.Idle
 var last_animation_state : AnimationState = AnimationState.Picking
 
 var current_store : Store = null
+
 
 func _update_label():
 	label_3d.text = EVENT_STATE_TEXTS[eventState]
@@ -98,52 +96,26 @@ func _physics_process(delta: float) -> void:
 	if target == null: return
 	
 	match eventState:
-		
 		## DOING NOTHING / STALL IN APPARTEMENT
 		EventState.IDLE:
 			return
-			
 		## REGULATE BY TIMER
 		EventState.LOOKING:
 			return
-			
 		EventState.WALKING_TO:
 			move_toward_target(delta)
 		EventState.PICKING:
 			return
-		EventState.BUYING:
-			return
+		EventState.BUYING:				
+			move_toward_target(delta)
 		EventState.LEAVING:
 			return
 			
-
 func _on_area_3d_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
 	if body == target:
-		print("yooo")
 		if eventState == EventState.WALKING_TO:
 			eventState = EventState.PICKING
 			take_from_inventory(body)
-			
-		#task_finish = true
-		#interactable = body.get_meta("interactable")
-		#if interactable is Pickable:
-			#take_an_item(interactable)
-			#await get_tree().create_timer(2).timeout
-			#drop_first_item()
-			#task_finish = false
-			#new_target(get_tree().get_first_node_in_group("Shelf"))
-			#return
-			#
-		#if interactable is Inventory:
-			#var items : ItemData = inventory.items[0]
-			#inventory.remove_single_item(0)
-			#interactable.add_single_item(items)
-			#if sub_menu.visible:
-				#sub_menu._update()
-			#animation_state = AnimationState.Picking
-			#play_animation_state()
-			#interactable = null
-			
 			
 func drop_first_item() -> void:
 	var item : ItemData = inventory.items[0]
@@ -155,15 +127,12 @@ func drop_first_item() -> void:
 	inventory.remove_single_item(0)
 	var pickable : Pickable = world_object.get_meta("interactable")
 	assert(pickable)
-	
 	pickable.drop(self)
-
 	
 func take_an_item(body : PhysicsBody3D) -> void:
 	var interactable = body.get_meta("interactable")
 	if interactable == null: return
 	if interactable is not Pickable: return
-	
 		
 	animation_state = AnimationState.Picking
 	play_animation_state()
@@ -172,17 +141,16 @@ func take_an_item(body : PhysicsBody3D) -> void:
 
 func _on_looking_for_timer_timeout() -> void:
 	if eventState != EventState.LOOKING: return
-	
 	if target_items_list.size() == target_index:
 		return
 		
 	for store in stores_array:
 		var shelf : PhysicsBody3D = store.store_have_item(target_items_list[target_index])
 		if shelf:
+			current_store = store
 			new_target(shelf)
 			return
 			
-	print("no item found :(")
 
 func take_from_inventory(body : PhysicsBody3D) -> void:
 	var interactable = body.get_meta("interactable")
@@ -195,9 +163,26 @@ func take_from_inventory(body : PhysicsBody3D) -> void:
 	if interactable.remove_item_by_id(target_items_list[target_index]) == false: return
 	
 	inventory.add_item(target_items_list[target_index])
-	eventState = EventState.LOOKING
 	target_index += 1
 	
-
+	if target_index < target_items_list.size(): eventState = EventState.LOOKING
+	else:
+		look_for_nearest_counter()
+		eventState = EventState.BUYING
+	
 func look_for_nearest_counter() -> void:
-	return
+	var workstations_list: Array = current_store.get_workstations_list()
+	var my_position: Vector3 = global_position # ou un autre point de référence
+	
+	if workstations_list.is_empty():
+		return
+		
+	var nearest_workstation : Node3D = null
+	
+	if workstations_list.size() == 1:
+		nearest_workstation = workstations_list[0].get_next_client_spot()
+	else:
+		assert(false)
+		
+	print(nearest_workstation.global_position)
+	new_target(nearest_workstation)
