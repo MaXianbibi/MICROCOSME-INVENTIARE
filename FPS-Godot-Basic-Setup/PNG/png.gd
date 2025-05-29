@@ -16,8 +16,9 @@ var target_index : int = 0
 @onready var player : Player = EntityManager.player
 const NECK = "Neck"
 @onready var look_at_modifier_3d: LookAtModifier3D = $Label3D/LookAtModifier3D
-
 var is_in_store : bool = false
+
+var appartement : Appartement = null
 
 enum AnimationState {
 	Idle,
@@ -37,7 +38,6 @@ enum EventState {
 	LEAVING
 }
 
-
 var eventState : EventState = EventState.LOOKING:
 	set(value):
 		eventState = value
@@ -45,9 +45,7 @@ var eventState : EventState = EventState.LOOKING:
 
 var animation_state : AnimationState = AnimationState.Idle
 var last_animation_state : AnimationState = AnimationState.Picking
-
 var current_store : Store = null
-
 
 func _update_label():
 	label_3d.text = EVENT_STATE_TEXTS[eventState]
@@ -61,6 +59,11 @@ func _ready() -> void:
 	play_animation_state()
 	_update_label()
 	look_at_modifier_3d.target_node = player.get_path()
+	
+	appartement = EntityManager.get_free_appartement()
+	
+	## peut etre creer des sdf si ya pas dappart dispo
+	assert(appartement)
 	
 
 func new_target(new_target : Node3D) -> void:
@@ -88,7 +91,7 @@ func move_toward_target(delta) -> void:
 		var target_rotation := atan2(direction.x, direction.z)
 		rotation.y = lerp_angle(rotation.y, target_rotation, delta * 5.0)
 	# Applique le mouvement seulement si utile
-	velocity = direction * 1.0
+	velocity = direction * 3.0
 	move_and_slide()
 
 func _physics_process(delta: float) -> void:	
@@ -108,7 +111,6 @@ func _physics_process(delta: float) -> void:
 				look_for_nearest_counter()
 			move_toward_target(delta)
 		EventState.LEAVING:
-			
 			move_toward_target(delta)
 			
 func _on_area_3d_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
@@ -209,7 +211,6 @@ func buying() -> void:
 	await get_tree().create_timer(0.7).timeout
 	target = null
 	eventState = EventState.LEAVING
-	navigation_agent_3d.target_position = Vector3(0, 0, 0)
-	look_at.active = false
+	new_target(appartement.get_apparetement_node())
 	animation_state = AnimationState.Walking
 	play_animation_state()

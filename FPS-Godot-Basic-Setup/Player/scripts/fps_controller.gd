@@ -45,7 +45,6 @@ func snap_object_rotation(obj: Node3D, direction: float) -> void:
 		return
 
 	var angle := wrapf(static_obj.rotation.y, 0.0, TAU)
-
 	var snapped_angle: float
 	if direction > 0.0:
 		snapped_angle = ceil(angle / SNAP_ANGLE) * SNAP_ANGLE
@@ -76,7 +75,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if object_cache[current_index] is StaticBody3D:
 			snap_object_rotation(object_cache[current_index], 1)
 			
-	if event.is_action_pressed("drop") and object_cache[current_index] is RigidBody3D: drop_rigid()
+	if event.is_action_pressed("drop") and object_cache[current_index] is RigidBody3D:
+		set_interaction(null)
+		drop_rigid()
 	
 		
 func can_object_move(world_object : Node3D) -> bool:
@@ -136,8 +137,8 @@ func _physics_process(delta):
 	pick_items()
 	
 	if Input.is_action_pressed("drop"):
-		drop_item()
-## INTERACTION
+		if object_cache[current_index] is StaticBody3D: apply_snapped_rotation(object_cache[current_index], .0625)
+
 	
 func set_interaction(intraction_body: Interactable) -> void:
 	if intraction_body:
@@ -156,10 +157,6 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		in_vision_object.interact(self)
 		interaction_ray.interact_body = null
 		set_interaction(null)	
-		
-	#if event.is_action("drop"):
-		#drop_item()
-		
 		
 	if event is InputEventKey and event.is_pressed() and not event.is_echo():
 		var text = event.as_text()
@@ -304,11 +301,6 @@ func drop_rigid() -> void:
 	
 func apply_snapped_rotation(obj: StaticBody3D, amount: float) -> void:
 	obj.rotate_y(amount)
-
-func drop_item() -> void:
-	if object_cache[current_index] == null: return
-	#if object_cache[current_index] is RigidBody3D: drop_rigid()
-	if object_cache[current_index] is StaticBody3D: apply_snapped_rotation(object_cache[current_index], .0625)
 	
 func pick_static_object() -> void:
 	var result: Dictionary = interaction_ray.interact_cast(1000.0)

@@ -52,6 +52,7 @@ shadow_mesh = SubResource("ArrayMesh_e2wts")
 radius = 0.0763837
 
 [node name="Apple" type="RigidBody3D"]
+continuous_cd = true
 
 [node name="SM_Prop_Food_Apple_02" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052098, 0)

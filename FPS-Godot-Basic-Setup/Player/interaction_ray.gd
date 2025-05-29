@@ -38,7 +38,8 @@ func _physics_process(_delta: float) -> void:
 	last_ray_result = interact_cast()
 
 	if last_ray_result.is_empty():
-		if interact_body != null and not hud.is_crossair():
+		if not hud.is_crossair():
+			print("bug")
 			player.set_interaction(null)
 		interact_body = null
 		return

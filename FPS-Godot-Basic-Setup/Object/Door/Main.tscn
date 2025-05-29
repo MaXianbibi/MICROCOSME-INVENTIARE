@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b1yleqbb8tc7x"]
+[gd_scene load_steps=28 format=3 uid="uid://b1yleqbb8tc7x"]
 
 [ext_resource type="Script" uid="uid://dl7mgwg862sm2" path="res://Sky/main.gd" id="1_up81d"]
 [ext_resource type="PackedScene" uid="uid://c7xlv1gunoh8o" path="res://PNG/PNG.tscn" id="2_efyiq"]
@@ -10,6 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://c3ffql15mo0aj" path="res://Player/Player.tscn" id="7_ede1j"]
 [ext_resource type="PackedScene" uid="uid://bsyf2wkwpxo6m" path="res://Object/Apple/Apple.tscn" id="8_q6ev5"]
 [ext_resource type="PackedScene" uid="uid://cxmec6hyugdc1" path="res://World/Store.tscn" id="10_vv1kj"]
+[ext_resource type="ArrayMesh" uid="uid://ei041x0wtrrq" path="res://Assets/City/OBJ/SM_Prop_TrafficLight_01.obj" id="11_v303c"]
+[ext_resource type="Texture2D" uid="uid://cajh6xsbgk84a" path="res://Assets/City/Textures/PolygonCity_Texture.png" id="12_skit2"]
+[ext_resource type="ArrayMesh" uid="uid://bfwlym1rpn07u" path="res://Assets/City/OBJ/SM_Prop_TrafficLight_02.obj" id="13_qnpsc"]
+[ext_resource type="Texture2D" uid="uid://b8b6hxc0l702x" path="res://Assets/City/Textures/Emissive_03.png" id="14_ede1j"]
+[ext_resource type="ArrayMesh" uid="uid://bfqgkhiov3ddi" path="res://Assets/City/OBJ/SM_Prop_TrafficLight_03.obj" id="15_q6ev5"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_vmibe"]
 vertices = PackedVector3Array(-2.25, -0.68901, -7, -1, -0.68901, -7, -1, -0.68901, -9, -3, -0.68901, -6.25, -14, -0.68901, -9, -1, -0.68901, 9, -2.25, -0.68901, -2.75, -3, -0.68901, -3.5, -14, -0.68901, 9, -0.75, -0.68901, -2.75, 0.5, -0.68901, -7, 1.25, -0.68901, -4, 3, -0.68901, -3.75, 3.75, -0.68901, -5, 1.25, -0.68901, -6.25, 6.25, -0.68901, -5, 6.25, -0.68901, -9, 7.25, -0.68901, -1.5, 6.75, -0.68901, -1, 7, -0.68901, -1, 7.25, -0.68901, -4.25, 14, -0.68901, -1, 14, -0.68901, -9, 0.25, -0.68901, -2.75, 3, -0.68901, -1.5, 3.75, -0.68901, -1, 3.75, -0.68901, 9, 5.75, -0.68901, -0.75, 7, -0.68901, 9, 4.75, -0.43901, -1.5, 4.5, -0.43901, -1, 14, -0.68901, 9)
@@ -130,6 +135,12 @@ material = SubResource("ShaderMaterial_62u37")
 left_to_right = 0.0
 size = Vector3(8, 2, 2)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0vhn0"]
+albedo_texture = ExtResource("12_skit2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vv1kj"]
+albedo_texture = ExtResource("14_ede1j")
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Main" type="Node3D" parent="."]
@@ -236,9 +247,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.224207, 0, 13.9628)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.06, 0, 13.9628)
 
 [node name="NavigationLink3D" type="NavigationLink3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50498, 0.201731, 7.56092)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.927002, 0.201731, 7.56092)
 end_position = Vector3(0, 0, 4.415)
 
 [node name="NavigationLink3D2" type="NavigationLink3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.7376, 0.201731, 7.56092)
 end_position = Vector3(0, 0, 4.415)
+
+[node name="SmPropTrafficLight01" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.9427, 0.904942, 1.02093)
+mesh = ExtResource("11_v303c")
+
+[node name="SmPropTrafficLight02" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1408, 3.00599, -2.67288)
+material_override = SubResource("StandardMaterial3D_0vhn0")
+mesh = ExtResource("11_v303c")
+
+[node name="SmPropTrafficLight03" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.7443, 3.37673, -5.25113)
+mesh = ExtResource("13_qnpsc")
+
+[node name="SmPropTrafficLight04" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0127, 3.65605, -5.7656)
+material_override = SubResource("StandardMaterial3D_vv1kj")
+mesh = ExtResource("15_q6ev5")
