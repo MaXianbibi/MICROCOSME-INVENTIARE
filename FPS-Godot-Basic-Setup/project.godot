@@ -35,6 +35,12 @@ HUD=""
 PlayerUI=""
 SubMenuHud=""
 Shelf=""
+Stores=""
+Appartement=""
+
+[gui]
+
+theme/default_font_generate_mipmaps=true
 
 [input]
 
@@ -89,16 +95,12 @@ shoot={
 ]
 }
 
+[navigation]
+
+3d/default_cell_size=0.1
+
 [rendering]
 
-global_illumination/voxel_gi/quality=1
-textures/default_filters/anisotropic_filtering_level=4
-environment/ssao/quality=4
-environment/ssil/quality=4
 anti_aliasing/quality/msaa_2d=3
 anti_aliasing/quality/msaa_3d=3
-textures/default_filters/texture_mipmap_bias=-1.0
-environment/screen_space_reflection/roughness_quality=3
-environment/subsurface_scattering/subsurface_scattering_quality=3
-global_illumination/sdfgi/probe_ray_count=5
 anti_aliasing/quality/screen_space_aa=1

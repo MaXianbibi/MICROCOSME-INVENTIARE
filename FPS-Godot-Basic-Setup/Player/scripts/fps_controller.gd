@@ -32,11 +32,12 @@ var in_vision_object : Interactable = null
 @onready var playerUI : PlayerUI = HudManager.player_item_hud
 @onready var interaction_ray: InteractionRay = $InteractionRay
 @onready var subMenu : SubItemMenu = HudManager.sub_menu_hud
-
 var interaction_dict : Dictionary = {}
 
 var current_index : int = 0
 var object_cache : Array = []
+
+var last_seen_object : Dictionary = {}
 
 func snap_object_rotation(obj: Node3D, direction: float) -> void:
 	var static_obj := obj as StaticBody3D
@@ -44,7 +45,6 @@ func snap_object_rotation(obj: Node3D, direction: float) -> void:
 		return
 
 	var angle := wrapf(static_obj.rotation.y, 0.0, TAU)
-
 	var snapped_angle: float
 	if direction > 0.0:
 		snapped_angle = ceil(angle / SNAP_ANGLE) * SNAP_ANGLE
@@ -54,11 +54,6 @@ func snap_object_rotation(obj: Node3D, direction: float) -> void:
 	var rot := static_obj.rotation
 	rot.y = snapped_angle
 	static_obj.rotation = rot
-
-
-
-
-
 
 func _unhandled_input(event: InputEvent) -> void:
 	_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
@@ -79,6 +74,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("drop"):
 		if object_cache[current_index] is StaticBody3D:
 			snap_object_rotation(object_cache[current_index], 1)
+			
+	if event.is_action_pressed("drop") and object_cache[current_index] is RigidBody3D:
+		set_interaction(null)
+		drop_rigid()
+	
 		
 func can_object_move(world_object : Node3D) -> bool:
 	if world_object is not StaticBody3D: return false
@@ -117,11 +117,11 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-
-	# Handle Jump.
+	
+	# Handle Jump.	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-
+		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")	
@@ -134,14 +134,10 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
-	
-	
 	pick_items()
 	
 	if Input.is_action_pressed("drop"):
-		drop_item()
-## INTERACTION
-
+		if object_cache[current_index] is StaticBody3D: apply_snapped_rotation(object_cache[current_index], .0625)
 
 	
 func set_interaction(intraction_body: Interactable) -> void:
@@ -161,10 +157,6 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		in_vision_object.interact(self)
 		interaction_ray.interact_body = null
 		set_interaction(null)	
-		
-	#if event.is_action("drop"):
-		#drop_item()
-		
 		
 	if event is InputEventKey and event.is_pressed() and not event.is_echo():
 		var text = event.as_text()
@@ -247,15 +239,10 @@ func process_static() -> void:
 	var scene : PackedScene = item.get_scene()
 	object_cache[current_index] = scene.instantiate()
 	get_tree().current_scene.add_child(object_cache[current_index])
-	
-	
 	object_cache[current_index].global_rotation = global_rotation
-	
 	snap_object_rotation(object_cache[current_index], 0)
-	
 	var pickable : Pickable = object_cache[current_index].get_node("Pickable")
 	assert(pickable)
-	
 	pickable._disable_static_physics()	
 	pickable.set_select_shader()
 	
@@ -268,7 +255,6 @@ func _process(_delta: float) -> void:
 		
 	if inventory.items[current_index].physicBody == ItemData.PhysicBody.Static:
 		process_static()
-
 
 func pick_rigid_object() -> void:
 	var world_object: PhysicsBody3D = object_cache[current_index]
@@ -297,7 +283,6 @@ func pick_rigid_object() -> void:
 	world_object.global_transform.basis = Basis(final_rot)
 	world_object.scale = Vector3.ONE * scale_factor
 	
-
 func pick_items() -> void:
 	if inventory.items[current_index] == null:
 		return	
@@ -306,7 +291,6 @@ func pick_items() -> void:
 	if object_cache[current_index] is  RigidBody3D: pick_rigid_object()
 	elif object_cache[current_index] is StaticBody3D: pick_static_object()
 	
-
 func drop_rigid() -> void:
 	var pickable : Pickable = object_cache[current_index].get_meta("interactable")
 	if pickable == null: return	
@@ -315,20 +299,12 @@ func drop_rigid() -> void:
 	updateUI()
 	pickable.drop(CAMERA_CONTROLLER)
 	
-
 func apply_snapped_rotation(obj: StaticBody3D, amount: float) -> void:
 	obj.rotate_y(amount)
-
-
-	
-func drop_item() -> void:
-	if object_cache[current_index] == null: return
-	if object_cache[current_index] is RigidBody3D: drop_rigid()
-	elif object_cache[current_index] is StaticBody3D: apply_snapped_rotation(object_cache[current_index], .0625)
-	
 	
 func pick_static_object() -> void:
 	var result: Dictionary = interaction_ray.interact_cast(1000.0)
+	last_seen_object = result
 	if result.is_empty():
 		return
 
@@ -341,16 +317,26 @@ func pick_static_object() -> void:
 	obj.global_position = snapped_pos
 
 	# Vérifier si l'objet peut être placé à cette position
-	var can_place: bool = can_place_object(obj)
-
+	
+	var can_place : bool = false
+	
+	if last_seen_object["collider"].get_parent() is NavigationRegion3D:
+		var navigation_parent : NavigationRegion3D = last_seen_object["collider"].get_parent()
+		can_place = navigation_parent.has_meta("Store")
+	else:
+		can_place = false
+			
+	if can_place:
+		can_place = can_place_object(obj)
+		can_place = can_place and last_seen_object["collider"] is not Entity
+	
+	## Ne peut que placer dans un store, peut etre utile plus tard pour specifier l'appartenance d'un store
 	# Appliquer le retour visuel
 	if obj.has_meta("objectData"):
 		var object_data: objectData = obj.get_meta("objectData") as objectData
 		if object_data:
 			object_data.change_select_color(can_place)
-
-	
-	
+			
 ## pas trop didee a savoir comment sa marche, peut probablement causer probleme dans le futur.
 func can_place_object(obj: Node3D) -> bool:
 	# Récupère la première CollisionShape3D trouvée dans l'objet
@@ -373,13 +359,16 @@ func can_place_object(obj: Node3D) -> bool:
 		var collider: Node = result.get("collider") as Node
 		if collider != null and not collider.is_in_group("no_blocking"):
 			return false
-
 	return true
-
 
 func place_static_object() -> void:
 	var world_object : StaticBody3D = object_cache[current_index]
 	if not can_place_object(world_object): return
+	
+	if last_seen_object["collider"] == null: return
+	## might crash here
+	var navigation_parent : NavigationRegion3D = last_seen_object["collider"].get_parent()	
+	world_object.reparent(navigation_parent)
 	
 	inventory.remove_single_item(current_index)	
 	object_cache[current_index] = null

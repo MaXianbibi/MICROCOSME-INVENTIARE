@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ibe0as6teuua"]
+
+[ext_resource type="Script" uid="uid://bpw241lv3atgg" path="res://World/City/appartement.gd" id="1_tv8i6"]
+
+[node name="Appartement" type="Node" groups=["Appartement"]]
+script = ExtResource("1_tv8i6")

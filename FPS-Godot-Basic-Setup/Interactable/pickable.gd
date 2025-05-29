@@ -75,14 +75,15 @@ func interact(body : Entity = null) -> void:
 		return
 		
 		
-	controller = body
-	is_in_transition = true
 	
 	var remaning : int = inventory.add_item(object_data.item_data)	
 	if body is Player: body.updateUI()	
 	
 	if parent is StaticBody3D: parent.queue_free()
+		
 	
+	controller = body
+	is_in_transition = true
 
 func _physics_process(delta: float) -> void:
 	if is_in_transition:
@@ -109,7 +110,6 @@ func _enable_physics() -> void:
 
 func _reset() -> void:
 	_enable_physics()
-	#
 	set_object_data()
 	object_data.item_data.size = 1
 	
