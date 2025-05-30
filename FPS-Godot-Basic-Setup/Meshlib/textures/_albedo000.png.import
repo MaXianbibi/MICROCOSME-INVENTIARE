@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b158gwo5awdig"
-path.s3tc="res://.godot/imported/PolygonShops_Ground_YellowDiagonal_01.png-e2e588b87b87e05d10da67046ab57d27.s3tc.ctex"
+uid="uid://bpkb85p4luk61"
+path.s3tc="res://.godot/imported/_albedo000.png-be54c2f3a72e73d966b8e7c9aff5e384.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Store/Texture/PolygonShops_Ground_YellowDiagonal_01.png"
-dest_files=["res://.godot/imported/PolygonShops_Ground_YellowDiagonal_01.png-e2e588b87b87e05d10da67046ab57d27.s3tc.ctex"]
+source_file="res://Meshlib/textures/_albedo000.png"
+dest_files=["res://.godot/imported/_albedo000.png-be54c2f3a72e73d966b8e7c9aff5e384.s3tc.ctex"]
 
 [params]
 

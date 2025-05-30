@@ -1,4 +1,4 @@
-[gd_scene load_steps=314 format=3 uid="uid://b1r45cgbrnljf"]
+[gd_scene load_steps=311 format=3 uid="uid://b1r45cgbrnljf"]
 
 [ext_resource type="Script" uid="uid://dfjdblgg61tp3" path="res://World/City/park.gd" id="1_251xs"]
 [ext_resource type="Texture2D" uid="uid://cajh6xsbgk84a" path="res://Assets/City/Textures/PolygonCity_Texture.png" id="1_di8ox"]
@@ -47,6 +47,7 @@
 [ext_resource type="ArrayMesh" uid="uid://cvsi4uimio6fx" path="res://Assets/City/OBJ/SM_Bld_Apartment_Corner_01.obj" id="45_ohb64"]
 [ext_resource type="ArrayMesh" uid="uid://bfxutgtotxbn5" path="res://Assets/City/OBJ/SM_Bld_Apartment_02.obj" id="47_2f7js"]
 [ext_resource type="ArrayMesh" uid="uid://c8cijm6fo1p82" path="res://Assets/City/OBJ/SM_Bld_Apartment_Door_02.obj" id="47_4elrj"]
+[ext_resource type="Texture2D" uid="uid://bvy6v6gwiyixg" path="res://Assets/City/Textures/PolygonCity_Texture_Normal.png" id="47_6d0gd"]
 [ext_resource type="ArrayMesh" uid="uid://bnv0o6b4m6bfd" path="res://Assets/City/OBJ/SM_Veh_Car_Small_01.obj" id="47_mabqq"]
 [ext_resource type="Texture2D" uid="uid://ypo6di0v1us5" path="res://Assets/City/Textures/PolygonCity_Texture_02_A.png" id="48_dxiow"]
 [ext_resource type="ArrayMesh" uid="uid://c44nhtwj0ohoq" path="res://Assets/City/OBJ/SM_Bld_Apartment_Roof_03.obj" id="48_n8m12"]
@@ -190,6 +191,9 @@ albedo_texture = ExtResource("33_fa11f")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_11qeb"]
 albedo_texture = ExtResource("1_di8ox")
+normal_enabled = true
+normal_scale = 4.65
+normal_texture = ExtResource("47_6d0gd")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rkd2h"]
 points = PackedVector3Array(0, 0, -5, 0, 0, 0, 5, 0, -5, 5, 0, 0)
@@ -778,7 +782,7 @@ points = PackedVector3Array(0, 0, -5, 0, 0, 0, 5, 0, -5, 5, 0, 0)
 albedo_texture = ExtResource("1_di8ox")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_j6vyf"]
-points = PackedVector3Array(5.05719, 0.133614, 0.0571408, 4.99962, 3, -0.000441551, 4.89749, 2.87931, 0.0381136, 4.59111, 2.24119, 0.0576415, 5.05719, 0, 0.0571408, 5.05719, 0.133614, -5.05719, -0.000116851, 3, -0.000441551, 0.511521, 2.92923, 0.0381136, 4.64167, 2.88489, 0.0381136, 4.99962, 3, -5.00011, 4.20513, 2.66083, 0.0576415, 4.40588, 2.57772, 0.0576415, 4.54755, 2.39184, 0.0576415, 4.59111, 0.829875, 0.0576415, -0.057188, 0, 0.0571408, 5.05719, 0, -5.05719, -0.057188, 0.133614, -5.05719, -0.057188, 0.133614, 0.0571408, 0.14156, 2.90104, 0.0381136, -0.000116851, 3, -5.00011, 0.794374, 2.66083, 0.0576415, 0.408392, 0.829875, 0.0576415, -0.057188, 0, -5.05719, 0.408392, 2.24119, 0.0576415, 0.451947, 2.39184, 0.0576415, 0.593623, 2.57772, 0.0576415)
+points = PackedVector3Array(4.94467, 3, -0.0553414, -0.0299174, -2.22045e-16, -5.02992, -0.0299174, -2.22045e-16, 0.0303158, 5.03082, -2.22045e-16, -5.02992, 0.0562344, 3, -4.94377, 5.03082, -2.22045e-16, 0.0303158, 0.0562344, 3, -0.0553414, 4.94467, 3, -4.94377, 0.152545, 2.91075, 0.00477508, 4.84388, 2.90807, -4.44089e-16)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fl5p2"]
 albedo_texture = ExtResource("1_di8ox")
@@ -786,48 +790,36 @@ emission_enabled = true
 emission_texture = ExtResource("49_rkd2h")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ik0xj"]
-points = PackedVector3Array(5.085, 3, 0.0846057, -0.084996, 3, 0.0846057, 4.67356, 0.296887, 0.129009, 4.73885, 0.191464, 0.129009, 5.085, 2.53543, 0.0846057, 5.085, 3, -5.085, -0.084996, 2.53543, 0.0846057, 0.260649, 0.191464, 0.129009, 0.325931, 0.296887, 0.129009, -0.084996, 3, -5.085, 0.468643, 0.0490407, 0.0376511, 4.99998, 0, -0.000116825, 5.085, 2.53543, -5.085, -0.084996, 2.53543, -5.085, -0.000482619, 0, -0.000116825, 0.0987068, 0.0490407, 0.0376511, 4.99998, 0, -5.00027, -0.000482619, 0, -5.00027)
+points = PackedVector3Array(0.0250214, 0, -4.9736, 5.05219, 3, 0.0525616, 4.88857, 3, 0.0525616, 5.04688, 2.99688, -5.085, -0.085, 2.99651, -5.08435, 4.93622, -2.22045e-16, -0.0631207, -0.085, 2.99651, 0.0461978, 0.0250214, 0, -0.0631207, 4.93622, 0, -4.9736, 0.316733, 0.1915, 0.0396768, 4.6445, 0.1915, 0.0396768, 0.0947648, 0.0744363, 0.0288324)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_toyg0"]
 albedo_texture = ExtResource("1_di8ox")
 emission_enabled = true
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kwoh0"]
-points = PackedVector3Array(5.085, 3, 0.0846057, -0.084996, 3, 0.0846057, 4.67356, 0.296887, 0.129009, 4.73885, 0.191464, 0.129009, 5.085, 2.53543, 0.0846057, 5.085, 3, -5.085, -0.084996, 2.53543, 0.0846057, 0.260649, 0.191464, 0.129009, 0.325931, 0.296887, 0.129009, -0.084996, 3, -5.085, 0.468643, 0.0490407, 0.0376511, 4.99998, 0, -0.000116825, 5.085, 2.53543, -5.085, -0.084996, 2.53543, -5.085, -0.000482619, 0, -0.000116825, 0.0987068, 0.0490407, 0.0376511, 4.99998, 0, -5.00027, -0.000482619, 0, -5.00027)
+points = PackedVector3Array(0.0250214, 0, -4.9736, 5.05219, 3, 0.0525616, 4.88857, 3, 0.0525616, 5.04688, 2.99688, -5.085, -0.085, 2.99651, -5.08435, 4.93622, -2.22045e-16, -0.0631207, -0.085, 2.99651, 0.0461978, 0.0250214, 0, -0.0631207, 4.93622, 0, -4.9736, 0.316733, 0.1915, 0.0396768, 4.6445, 0.1915, 0.0396768, 0.0947648, 0.0744363, 0.0288324)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2hvhm"]
 albedo_texture = ExtResource("1_di8ox")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_o645q"]
-points = PackedVector3Array(5.085, 3, 0.0846057, -0.084996, 3, 0.0846057, 4.67356, 0.296887, 0.129009, 4.73885, 0.191464, 0.129009, 5.085, 2.53543, 0.0846057, 5.085, 3, -5.085, -0.084996, 2.53543, 0.0846057, 0.260649, 0.191464, 0.129009, 0.325931, 0.296887, 0.129009, -0.084996, 3, -5.085, 0.468643, 0.0490407, 0.0376511, 4.99998, 0, -0.000116825, 5.085, 2.53543, -5.085, -0.084996, 2.53543, -5.085, -0.000482619, 0, -0.000116825, 0.0987068, 0.0490407, 0.0376511, 4.99998, 0, -5.00027, -0.000482619, 0, -5.00027)
+points = PackedVector3Array(0.0250214, 0, -4.9736, 5.05219, 3, 0.0525616, 4.88857, 3, 0.0525616, 5.04688, 2.99688, -5.085, -0.085, 2.99651, -5.08435, 4.93622, -2.22045e-16, -0.0631207, -0.085, 2.99651, 0.0461978, 0.0250214, 0, -0.0631207, 4.93622, 0, -4.9736, 0.316733, 0.1915, 0.0396768, 4.6445, 0.1915, 0.0396768, 0.0947648, 0.0744363, 0.0288324)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxiow"]
 albedo_texture = ExtResource("1_di8ox")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ojlvv"]
-points = PackedVector3Array(5.15484, 0.499867, 0.455801, 5.02594, 0.743541, 0.242204, -0.154839, 0.499867, 0.455801, 5.15484, 0.392149, 0.455801, 5.15484, 0.499867, -5.1682, -0.0264629, 0.743541, 0.242204, 5.02594, 0.743541, -0.0814953, -0.154839, 0.392149, 0.455801, -0.154839, 0.499867, -5.1682, 4.59456, 0.079478, 0.36717, 5.12573, 0.269948, 0.349554, 5.15484, 0.392149, -5.1682, -0.0264629, 0.743541, -0.0814953, -0.154839, 0.392149, -5.1682, -0.126253, 0.269948, 0.349554, 0.404922, 0.079478, 0.36717, 5.01139, 0, 0.034112, 5.12573, 0.269948, -5.13847, -0.126253, 0.269948, -5.13847, -0.0119101, 0, 0.034112, 5.01139, 0, -5.04323, -0.0119101, 0, -5.04323)
+points = PackedVector3Array(0.256593, 0, -0.213268, 5.15676, 0.580132, 0.500435, 4.96854, 0.7435, 0.219514, 5.0671, -0.0444777, -5.1228, -0.199435, 0.580132, -5.21283, -0.0107125, 0.7435, 0.219514, 5.15676, 0.580132, -5.21283, -0.0201261, -0.0444777, -5.1228, 5.0671, -0.0444777, 0.0535963, -0.199435, 0.580132, 0.500435, -0.109256, 0.758794, -0.124804, 0.453601, 0.0617934, 0.259671, 5.0671, 0.758794, -0.124804, 0.088635, 0.0686618, 0.0346, 4.50422, 0.0617934, 0.259671, -0.0583083, 0.314883, 0.3499, 0.574098, 5.55112e-17, -0.0541268, 5.01563, 0.314883, 0.3499)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_33v0k"]
 albedo_texture = ExtResource("1_di8ox")
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2c4sa"]
-points = PackedVector3Array(-0.411435, 0.200474, 0.218451, -0.318806, 0, 0, -0.411435, 0.200474, 0.571504, -0.411435, 0.952981, 0.218451, 0.318725, 0, 0, -0.318806, 0, 0.0522854, -0.318806, 0.322726, 0, -0.294078, 0.105887, 0.651399, -0.411435, 0.952981, 0.571504, -0.318564, 0.980938, 0.351332, -0.316953, 0.971781, 0.195369, 0.411435, 0.200474, 0.218451, 0.318725, 0, 0.0522854, 0.318725, 0.322726, 0, 0.293997, 0.105887, 0.651399, -0.294078, 0.269636, 0.651399, 0.411435, 0.952981, 0.571504, -0.171727, 0.995063, 0.505701, -0.171727, 0.995063, 0.284254, -0.293675, 0.971781, 0.195369, 0.411435, 0.200474, 0.571504, 0.411435, 0.952981, 0.218451, 0.293997, 0.269636, 0.651399, 0.349091, 0.995063, 0.505701, 0.349091, 0.995063, 0.284254)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kdad7"]
-points = PackedVector3Array(-0.411435, 0.200474, 0.218451, -0.318806, 0, 0, -0.411435, 0.200474, 0.571504, -0.411435, 0.952981, 0.218451, 0.318725, 0, 0, -0.318806, 0, 0.0522854, -0.318806, 0.322726, 0, -0.294078, 0.105887, 0.651399, -0.411435, 0.952981, 0.571504, -0.318564, 0.980938, 0.351332, -0.316953, 0.971781, 0.195369, 0.411435, 0.200474, 0.218451, 0.318725, 0, 0.0522854, 0.318725, 0.322726, 0, 0.293997, 0.105887, 0.651399, -0.294078, 0.269636, 0.651399, 0.411435, 0.952981, 0.571504, -0.171727, 0.995063, 0.505701, -0.171727, 0.995063, 0.284254, -0.293675, 0.971781, 0.195369, 0.411435, 0.200474, 0.571504, 0.411435, 0.952981, 0.218451, 0.293997, 0.269636, 0.651399, 0.349091, 0.995063, 0.505701, 0.349091, 0.995063, 0.284254)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_cgbix"]
-points = PackedVector3Array(-3.85642e-05, -9.53674e-05, 0, -0.529759, -0.0634055, 0, -3.85642e-05, -0.0177345, 0.131378, 0.470201, -0.0634055, 0, -0.600202, -0.108314, 0, -0.600202, -0.108314, 0.169817, -0.529759, -0.08114, 0.131378, -0.526685, -0.773356, 0.701232, 0.542381, -0.773356, 0.685719, 0.576198, -0.108314, 0.169817, 0.470201, -0.08114, 0.131378, 0.576198, -0.108314, 0, -0.694704, -0.773356, 0, -0.694704, -0.773356, 0.469639, -0.526685, -0.92143, 0.701232, 0.409917, -0.974061, 0.701232, 0.542381, -0.92143, 0.685719, 0.6707, -0.773356, 0.469639, 0.6707, -0.773356, 0, -0.694704, -0.92143, 0, -0.694704, -0.92143, 0.469639, -0.464931, -0.974061, 0.701232, 0.6707, -0.92143, 0, 0.6707, -0.92143, 0.469639)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_78uyl"]
-points = PackedVector3Array(-3.85642e-05, -9.53674e-05, 0, -0.529759, -0.0634055, 0, -3.85642e-05, -0.0177345, 0.131378, 0.470201, -0.0634055, 0, -0.600202, -0.108314, 0, -0.600202, -0.108314, 0.169817, -0.529759, -0.08114, 0.131378, -0.526685, -0.773356, 0.701232, 0.542381, -0.773356, 0.685719, 0.576198, -0.108314, 0.169817, 0.470201, -0.08114, 0.131378, 0.576198, -0.108314, 0, -0.694704, -0.773356, 0, -0.694704, -0.773356, 0.469639, -0.526685, -0.92143, 0.701232, 0.409917, -0.974061, 0.701232, 0.542381, -0.92143, 0.685719, 0.6707, -0.773356, 0.469639, 0.6707, -0.773356, 0, -0.694704, -0.92143, 0, -0.694704, -0.92143, 0.469639, -0.464931, -0.974061, 0.701232, 0.6707, -0.92143, 0, 0.6707, -0.92143, 0.469639)
 
 [node name="Park" type="Node3D"]
 script = ExtResource("1_251xs")
 
 [node name="Main" type="Node3D" parent="."]
 script = ExtResource("2_251xs")
-day_time = 16.9906
+day_time = 13.2148
 use_day_time_for_shader = true
 sun_base_enegry = 1.0
 moon_base_enegry = 0.1
@@ -836,16 +828,16 @@ moon_base_enegry = 0.1
 environment = ExtResource("2_7lxm4")
 
 [node name="Sun" type="DirectionalLight3D" parent="Main"]
-transform = Transform3D(0.92102, 0, -0.389514, 0.101739, -0.965286, 0.240566, -0.375993, -0.261195, -0.889047, 0, 0, 0)
+transform = Transform3D(0.92093, 0, -0.389726, 0.370182, -0.3127, 0.874747, -0.121867, -0.949852, -0.287974, 0, 0, 0)
 rotation_order = 4
 shadow_enabled = true
 shadow_opacity = 0.75
 shadow_blur = 5.0
 
 [node name="Moon" type="DirectionalLight3D" parent="Main"]
-transform = Transform3D(0.884854, 0, 0.465867, 0.376971, 0.587554, -0.716011, -0.273722, 0.809184, 0.519901, 0, 0, 0)
+transform = Transform3D(0.976409, 0, 0.215923, -0.00264086, 0.999924, 0.0119421, -0.215906, -0.0122306, 0.976337, 0, 0, 0)
 rotation_order = 4
-light_energy = 0.0
+light_energy = 0.037074
 light_indirect_energy = 4.817
 shadow_enabled = true
 shadow_opacity = 0.25
@@ -855,10 +847,11 @@ directional_shadow_fade_start = 0.1
 [node name="Hud" parent="." instance=ExtResource("1_rkd2h")]
 
 [node name="Player" parent="." instance=ExtResource("58_vlfs0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.17076, 0, -1.16601)
 
 [node name="NPC" parent="." instance=ExtResource("60_mygxi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07035, -2.63774)
+collision_layer = 2
+collision_mask = 2
 
 [node name="CityHall" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0300617, -0.0227494, 0.0362425)
@@ -2817,6 +2810,8 @@ navigation_mesh = SubResource("NavigationMesh_mygxi")
 metadata/_edit_lock_ = true
 
 [node name="Sidewalk" type="StaticBody3D" parent="NavigationRegion3D"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="SmEnvSidewalkStraight02" type="MeshInstance3D" parent="NavigationRegion3D/Sidewalk"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 24.9, 0, 20.1)
@@ -3910,19 +3905,11 @@ material_override = SubResource("StandardMaterial3D_33v0k")
 mesh = ExtResource("53_w6n8r")
 skeleton = NodePath("../../..")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="NavigationRegion3D/Apartment1"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20.5, 6.2, 14.1)
-shape = SubResource("ConvexPolygonShape3D_2c4sa")
-
 [node name="SmPropAircon01" type="MeshInstance3D" parent="NavigationRegion3D/Apartment1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20.5, 9.2, 10.9)
 material_override = SubResource("StandardMaterial3D_33v0k")
 mesh = ExtResource("53_w6n8r")
 skeleton = NodePath("../../..")
-
-[node name="CollisionShape3D7" type="CollisionShape3D" parent="NavigationRegion3D/Apartment1"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20.5, 9.2, 10.9)
-shape = SubResource("ConvexPolygonShape3D_kdad7")
 
 [node name="Appartement" parent="NavigationRegion3D/Apartment1" node_paths=PackedStringArray("door") instance=ExtResource("51_7lxm4")]
 door = NodePath("../Door_marker")
@@ -3933,19 +3920,11 @@ material_override = SubResource("StandardMaterial3D_kiu33")
 mesh = ExtResource("51_dxiow")
 skeleton = NodePath("../../..")
 
-[node name="CollisionShape3D8" type="CollisionShape3D" parent="NavigationRegion3D/Apartment1"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20.1, 3.2, 14.1)
-shape = SubResource("ConvexPolygonShape3D_cgbix")
-
 [node name="SmBldCover11" type="MeshInstance3D" parent="NavigationRegion3D/Apartment1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20.1, 3.2, 10.9)
 material_override = SubResource("StandardMaterial3D_kiu33")
 mesh = ExtResource("51_dxiow")
 skeleton = NodePath("../../..")
-
-[node name="CollisionShape3D9" type="CollisionShape3D" parent="NavigationRegion3D/Apartment1"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20.1, 3.2, 10.9)
-shape = SubResource("ConvexPolygonShape3D_78uyl")
 
 [node name="Door_marker" type="Marker3D" parent="NavigationRegion3D/Apartment1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.8, 2, 12.5)

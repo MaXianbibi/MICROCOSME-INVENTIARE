@@ -20,6 +20,8 @@ var is_in_store : bool = false
 
 var appartement : Appartement = null
 
+var active : bool = true
+
 enum AnimationState {
 	Idle,
 	Walking,
@@ -63,7 +65,7 @@ func _ready() -> void:
 	appartement = EntityManager.get_free_appartement()
 	
 	## peut etre creer des sdf si ya pas dappart dispo
-	assert(appartement)
+	#assert(appartement)
 	
 
 func new_target(new_target : Node3D) -> void:
@@ -94,7 +96,9 @@ func move_toward_target(delta) -> void:
 	velocity = direction * 3.0
 	move_and_slide()
 
-func _physics_process(delta: float) -> void:	
+func _physics_process(delta: float) -> void:
+	if not active: return
+	
 	match eventState:
 		## DOING NOTHING / STALL IN APPARTEMENT
 		EventState.IDLE:
@@ -203,6 +207,8 @@ func look_for_nearest_counter() -> void:
 func _on_navigation_agent_3d_navigation_finished() -> void:
 	if eventState == EventState.BUYING:
 		buying()
+	elif eventState == EventState.LEAVING:
+		deactivate()
 		
 func buying() -> void:
 	look_at.target_node = player.CAMERA_CONTROLLER.get_path()
@@ -214,3 +220,21 @@ func buying() -> void:
 	new_target(appartement.get_apparetement_node())
 	animation_state = AnimationState.Walking
 	play_animation_state()
+	
+func deactivate():
+	hide()
+	active = false
+	await get_tree().process_frame
+
+	set_process_mode(Node.PROCESS_MODE_DISABLED)
+
+	#global_position = Vector3(9999, -1000, 9999)
+
+	
+
+
+func activate() -> void:
+	show()
+	active = true
+	set_process_mode(Node.PROCESS_MODE_INHERIT)
+	

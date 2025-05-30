@@ -329,7 +329,7 @@ shader_parameter/stars_texture = ExtResource("1_pqdtg")
 shader_parameter/stars_speed = 1.0
 shader_parameter/stars_scale = 1.76
 shader_parameter/stars_opacity = 0.1
-shader_parameter/overwritten_time = 4099.06
+shader_parameter/overwritten_time = 3089.21
 
 [sub_resource type="Sky" id="Sky_mpthu"]
 sky_material = SubResource("ShaderMaterial_efyiq")
@@ -339,10 +339,11 @@ background_mode = 2
 sky = SubResource("Sky_mpthu")
 ambient_light_source = 3
 reflected_light_source = 2
-tonemap_mode = 2
+tonemap_mode = 1
 ssr_enabled = true
 ssao_enabled = true
 ssil_enabled = true
 sdfgi_enabled = true
 sdfgi_use_occlusion = true
 glow_enabled = true
+adjustment_brightness = 2.8

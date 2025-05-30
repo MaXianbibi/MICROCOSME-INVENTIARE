@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://wl5xrxp20hru"]
+
+[ext_resource type="Texture2D" uid="uid://cajh6xsbgk84a" path="res://Assets/City/Textures/PolygonCity_Texture.png" id="1_07xd5"]
+[ext_resource type="ArrayMesh" uid="uid://dp725vuvfsjt2" path="res://Assets/City/OBJ/SM_Env_Road_01.obj" id="1_fieia"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ejqo3"]
+albedo_texture = ExtResource("1_07xd5")
+
+[node name="Meshlib" type="Node3D"]
+
+[node name="SmEnvRoad01" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.48763, 0, 7.2469)
+material_override = SubResource("StandardMaterial3D_ejqo3")
+mesh = ExtResource("1_fieia")

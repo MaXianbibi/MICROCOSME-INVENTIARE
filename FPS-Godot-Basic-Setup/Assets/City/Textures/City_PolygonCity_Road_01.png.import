@@ -2,21 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b158gwo5awdig"
-path.s3tc="res://.godot/imported/PolygonShops_Ground_YellowDiagonal_01.png-e2e588b87b87e05d10da67046ab57d27.s3tc.ctex"
+uid="uid://cggbd8vyockra"
+path="res://.godot/imported/City_PolygonCity_Road_01.png-e76b24c42805d2b068847b014861cd76.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Store/Texture/PolygonShops_Ground_YellowDiagonal_01.png"
-dest_files=["res://.godot/imported/PolygonShops_Ground_YellowDiagonal_01.png-e2e588b87b87e05d10da67046ab57d27.s3tc.ctex"]
+source_file="res://Assets/City/Textures/City_PolygonCity_Road_01.png"
+dest_files=["res://.godot/imported/City_PolygonCity_Road_01.png-e76b24c42805d2b068847b014861cd76.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
