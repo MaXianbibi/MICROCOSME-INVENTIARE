@@ -17,6 +17,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -97,3 +101,73 @@ theme_override_constants/h_separation = 10
 columns = 10
 script = ExtResource("4_amwvk")
 metadata/_edit_use_anchors_ = true
+
+[node name="Money" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.028
+anchor_top = 0.012
+anchor_right = 0.194
+anchor_bottom = 0.099
+offset_left = -0.256001
+offset_top = 0.224
+offset_right = 0.511993
+offset_bottom = -0.152008
+text = "0 $"
+
+[node name="TimeOfDay" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.028
+anchor_top = 0.012
+anchor_right = 0.194
+anchor_bottom = 0.099
+offset_left = 927.744
+offset_top = 8.224
+offset_right = 936.512
+offset_bottom = -0.152008
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+horizontal_alignment = 2
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(3.38, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.691358
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VScrollBar" type="GridContainer" parent="Panel"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="Panel/VScrollBar"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/VScrollBar/Control"]
+layout_mode = 2
+offset_left = 152.0
+offset_top = -49.0
+offset_right = 1136.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd"
+fit_content = true
+scroll_following = true
+
+[node name="Label" type="Label" parent="Panel/VScrollBar/Control"]
+layout_mode = 2
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 137.0
+offset_bottom = 39.0
+text = "NAMEOFBOT : "

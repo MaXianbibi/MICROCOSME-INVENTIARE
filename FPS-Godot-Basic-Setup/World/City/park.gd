@@ -2,11 +2,14 @@ extends Node3D
 
 
 @onready var main: Node3D = $Main
+@onready var hud : HUD = HudManager.hud
 var time_scale := 1.0 / 60
 
 
 func _physics_process(delta: float) -> void:
-	return
-	#main.day_time += delta * time_scale
-	#if main.day_time >= 23.99:
-		#main.day_of_year += 1
+	main.day_time += delta * time_scale
+	if main.day_time >= 23.99:
+		main.day_of_year += 1
+		
+	hud.update_time(main.day_time)
+	
