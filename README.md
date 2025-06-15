@@ -11,4 +11,3 @@ A full-featured game built entirely in Godot using GDScript, simulating a dynami
 
 ---
 
-Ideal for players and developers interested in economic strategy and simulation games with deep AI interactions.
